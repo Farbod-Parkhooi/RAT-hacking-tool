@@ -2,3 +2,4 @@ wget
 webbrowser
 bs4
 colorama
+pyinstaller
