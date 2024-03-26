@@ -1,2 +1,11 @@
-# MS-TL
-This is a hacking tool by @Unknow-per. It use telegram to connect to hacker.
+# installing
+
+```
+git clone https://github.com/Unknow-per/MS-TL/
+
+cd MS-TL
+
+pip install -r requirements.txt
+
+python setup.py
+```
