@@ -2,6 +2,11 @@ from colorama import init, Fore
 init()
 def make_exe(ID): 
     make_python(ID=ID)
+    # pyinstaller --noconfirm --onedir --windowed --icon "C:/Users/ASUS/OneDrive/Documentos/other/Github.com/MS-TL/MSTL/Files/icon.ico" --name "MS TL"  "C:/Users/ASUS/OneDrive/Documentos/other/Github.com/MS-TL/MSTL/mstl.py"
+    from os import system, chdir, getcwd, removedirs
+    chdir(fr"{getcwd()}\MSTL")
+    removedirs("dist")
+    system("""pyinstaller --noconfirm --onedir --windowed --icon "C:/Users/ASUS/OneDrive/Documentos/other/Github.com/MS-TL/MSTL/Files/icon.ico" --name "MS TL"  "C:/Users/ASUS/OneDrive/Documentos/other/Github.com/MS-TL/MSTL/mstl.py""")
 def make_python(ID):
     from os import system 
     with open("MSTL/Files/info.info", "w") as writer: writer.write(ID)
