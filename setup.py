@@ -69,13 +69,11 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
-
-banner()
-
 def make_python(ID):
     from os import system 
-    with open("MSTL/Files/info.info", "w") as writer: writer.write(ID)
+    with open("MSTL/Files/info.log", "w") as writer: writer.write(ID)
     print(Fore.GREEN + "Python file is ready in MSTL directory.")
+banner()
 try: id = str(input(Fore.GREEN + "write your telegram user id(with @userinfobot): "))
 except ValueError: print(Fore.RED + "You must write str."), exit()
 make_python(ID=id)
