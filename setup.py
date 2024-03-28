@@ -71,7 +71,7 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
 def make_python(ID):
-    with open("MSTL/mstl.py", "r") as read: 
+    with open("MSTL/builder.py", "r") as read: 
         text = read.readlines()
         text = "".join(text).replace("TELEGRAM_ID", ID)
     system("mkdir output")
