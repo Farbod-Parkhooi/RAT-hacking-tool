@@ -50,7 +50,6 @@ if check_internret():
                 "/show_warning",
                 "/voice",
                 "/dis_all",
-                "/ena_all",
                 "/chdir",
                 "/process",
                 "/chruns",

