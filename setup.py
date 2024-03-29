@@ -81,7 +81,6 @@ def make_python(ID, TOKEN, NAME):
     print(Fore.GREEN + "File is created in /output directory.")
 def make_exe(NAME, ICON): 
     system("mkdir output/exe")
-    print(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
     system(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
     print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
 banner()
@@ -100,11 +99,8 @@ try:
     icon = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome icon write C if not press enter: ")).lower()    
     if icon == "c":
         icon = input("write your icon file address(.ico file): ")
-        print(icon)
-        if icon.endswith(".ico"): 
-            print("pass")
+        if icon.endswith(".ico"): pass
     else: 
-        print("Oh")
         icon = "Files/icon.ico"
     make_python(ID=id, TOKEN=token, NAME=name)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
