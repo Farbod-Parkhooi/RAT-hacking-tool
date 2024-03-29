@@ -89,6 +89,7 @@ try:
     tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome token write C if not press enter: ")).lower()
     name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome name write C if not press enter: ")).lower()
     icon = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome icon write C if not press enter: ")).lower()    
+    icon = "Files/icon.ico"
     if name == "c": 
         name = input("Write your app name(ex: mstl): ")
     else: 
