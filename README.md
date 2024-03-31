@@ -18,7 +18,7 @@ python setup.py
 
 # How to use 
 <p>
-after open setup.py:
+after complete setup.py:
 
 start MS TL bot in telegram(@msftlbot)
 
@@ -26,7 +26,3 @@ open file in victim PC. and go to telegram.
 
 Now you can send /commands to help.
 </p>
-
-# Custome token
-open setup.py and when it ask for custome token write C.
-then write your bot token.
