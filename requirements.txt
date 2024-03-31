@@ -2,3 +2,5 @@ wget
 webbrowser
 bs4
 colorama
+webview
+mutagen
