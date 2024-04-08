@@ -1,6 +1,8 @@
+# you should install Its_Hub Library (https://www.github.com/Unknow-per/Its_Hub-Library)
 wget
 webbrowser
 bs4
 colorama
 webview
 mutagen
+pyautogui
