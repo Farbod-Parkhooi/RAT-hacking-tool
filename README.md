@@ -27,7 +27,7 @@ open file in victim PC. and go to telegram.
 Now you can send /commands to help.
 </p>
 
-# Standard TK payloads (9)
+# Standard TK payloads (10)
 
 ## builder/tk_payloads/survey.py
 <img src="Files/survey.png" />
