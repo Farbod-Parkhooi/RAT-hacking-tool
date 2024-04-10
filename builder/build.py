@@ -354,27 +354,33 @@ if check_internret():
                             send_msg(f"Localhost is started at: http://{local_ip}:{port}")
                         except: send_msg("Error;")
                     if command == "/open_app":
-                        send_msg("write complete name of application(in 10 seconds || example: cmd.exe):")
-                        sleep(10)
-                        name = read_msg()
                         try:
-                            startfile(name)
-                            send_msg(f"{name} application is opened.")
-                        except FileNotFoundError:
-                            send_msg("File not found.")
+                            send_msg("write complete name of application(in 10 seconds || example: cmd.exe):")
+                            sleep(10)
+                            name = read_msg()
+                            try:
+                                startfile(name)
+                                send_msg(f"{name} application is opened.")
+                            except FileNotFoundError:
+                                send_msg("File not found.")
+                        except: send_msg("Error;")
                     if command == "/write_word":
-                        send_msg("write your text(in 5 seconds):")
-                        sleep(5)
-                        text = read_msg()
-                        write(text)
-                        send_msg(f"{text} is writed")
+                        try:
+                            send_msg("write your text(in 5 seconds):")
+                            sleep(5)
+                            text = read_msg()
+                            write(text)
+                            send_msg(f"{text} is writed")
+                        except: send_msg("Error;")
                     if command == "/hotkey":
-                        send_msg("write your hotkeys(in 10 seconds || split with space):")
-                        sleep(10)
-                        all_key = str(read_msg()).split(" ")
-                        len_key = len(all_key)
-                        if len_key == 1 and len_key != 0: hotkey(all_key[0])
-                        else: hotkey(all_key[0], all_key[1])
+                        try:
+                            send_msg("write your hotkeys(in 10 seconds || split with space):")
+                            sleep(10)
+                            all_key = str(read_msg()).split(" ")
+                            len_key = len(all_key)
+                            if len_key == 1 and len_key != 0: hotkey(all_key[0])
+                            else: hotkey(all_key[0], all_key[1])
+                        except: send_msg("Error;")
                     send_msg("click /pass")
                     sleep(5)
             except: 
