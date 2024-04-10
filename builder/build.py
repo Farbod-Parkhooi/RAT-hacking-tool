@@ -58,7 +58,9 @@ if check_internret():
                 "/localhost", 
                 "/open_app", 
                 "/write_word", 
-                "/hotkey"]
+                "/hotkey",
+                "/press_enter",
+                "/alt_f4"]
     def send_msg(message, token=token, id=id):
         try:
             url = f"https://api.telegram.org/bot{token}/sendmessage?chat_id={id}&text={message}"
@@ -384,6 +386,12 @@ if check_internret():
                             len_key = len(all_key)
                             if len_key == 1 and len_key != 0: hotkey(all_key[0])
                             else: hotkey(all_key[0], all_key[1])
+                        except: send_msg("Error;")
+                    if command == "/press_enter":
+                        try: hotkey("enter")
+                        except: send_msg("Error;")
+                    if command == "/alt_f4":
+                        try: hotkey("alt", "f4")
                         except: send_msg("Error;")
                     send_msg("click /pass")
                     sleep(5)
