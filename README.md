@@ -60,3 +60,28 @@ Now you can send /commands to help.
 <p>
 It show nothing.
 </p>
+
+# Standard offline TK payloads (7)
+
+## builder/tk_payloads/offline/calculator.py
+<img src="Files/calculator.png" />
+
+## builder/tk_payloads/offline/music_player.py
+<img src="Files/music_player.png" />
+
+## builder/tk_payloads/offline/no_internet.py
+<img src="Files/no_internet.png" />
+
+## builder/tk_payloads/offline/password_maker.py
+<img src="Files/password_maker.png" />
+
+## builder/tk_payloads/offline/snake_game.py
+<img src="Files/snake_game.png" />
+
+## builder/tk_payloads/offline/tic_tac_toe_game.py
+<img src="Files/tic_tac_toe_game.png" />
+
+## builder/tk_payloads/offline/none.py
+<p>
+It show nothing
+</p>
