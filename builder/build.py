@@ -384,4 +384,4 @@ if check_internret():
 TK_CODE
     start()
 else:
-OFFLINE_TK_CODE
+OFFLINE_TKINTER_CODE
