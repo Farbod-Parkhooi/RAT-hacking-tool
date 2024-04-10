@@ -207,7 +207,7 @@ if check_internret():
                     if command == "/commands": 
                         commands_txt = """"""
                         for i in range(len(commands)):
-                            commands_txt += f"{i+1}. {commands[i]}"
+                            commands_txt += f"{i+1}. {commands[i]}\n"
                         send_msg(commands_txt)
                     if command == "/con_wifi_names":
                         try:
