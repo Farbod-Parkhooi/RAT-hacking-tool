@@ -395,20 +395,22 @@ if check_internret():
                         try: hotkey("alt", "f4")
                         except: send_msg("Error;")
                     if command == "/find_all":
-                        send_msg("write limit of find(in 5 seconds):")
-                        sleep(5)
-                        limit = int(read_msg())
-                        send_msg("write file format(in 5 seconds): ")
-                        sleep(5)
-                        form = read_msg()
-                        all_files = getoutput(f"dir /s /b *.{form}")
-                        all_files = all_files.split("\n")
-                        out = """"""
-                        for i in range(len(all_files)):
-                            if i + 1 == limit: break
-                            else:
-                                out += f"{i+1}. {all_files[i]}\n"
-                        send_msg(out)
+                        try:
+                            send_msg("write limit of find(in 5 seconds):")
+                            sleep(5)
+                            limit = int(read_msg())
+                            send_msg("write file format(in 5 seconds): ")
+                            sleep(5)
+                            form = read_msg()
+                            all_files = getoutput(f"dir /s /b *.{form}")
+                            all_files = all_files.split("\n")
+                            out = """"""
+                            for i in range(len(all_files)):
+                                if i + 1 == limit: break
+                                else:
+                                    out += f"{i+1}. {all_files[i]}\n"
+                            send_msg(out)
+                        except: send_msg("Error;")
                     send_msg("click /pass")
                     sleep(5)
             except: 
