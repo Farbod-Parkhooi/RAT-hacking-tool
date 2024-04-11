@@ -98,7 +98,7 @@ def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR):
 def make_exe(NAME, ICON): 
     system("mkdir output/exe")
     system(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
-    print(Fore.GREEN + ".exe application is created in /output/exe/mstl")
+    print(Fore.GREEN + f".exe application is created in /output/exe/{NAME}.exe")
 def check_update(): 
     online_version = loads(requests.get("https://raw.githubusercontent.com/Unknow-per/MS-TL-hacking-tool/main/log/version.json").text)
     with open("log/version.json", "r") as file:
