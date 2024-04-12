@@ -130,15 +130,15 @@ def get_options():
             if code_addr.endswith(".py"): pass
         else: 
             offline_code_addr = "builder/tk_payloads/offline/no_internet.py"
-        payload = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " Choice your platform(windows, linux, mac): ")).lower()
-        if payload == "linux": 
-            payload = "builder/linux-build.py"
-        elif payload == "mac": 
+        platform = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " Choice your platform(windows, linux, mac): ")).lower()
+        if platform == "linux": 
+            platform = "builder/linux-build.py"
+        elif platform == "mac": 
             print(Fore.RED + "Mac payload doesn't exist. Sorry.")
             exit()
         else: 
-            payload = "builder/windows-build.py"
-        make.make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr)
+            platform = "builder/windows-build.py"
+        make.make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr, PLATFORM=platform)
         opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
         if opt == "y": 
             make.make_exe(NAME=name, ICON=icon)

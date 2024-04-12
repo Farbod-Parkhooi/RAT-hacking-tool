@@ -8,7 +8,7 @@ def printer(per="0"):
     banner.same_banner()
     print(Fore.GREEN + f"Creating EXE file({per}%).")
     sleep(1)
-def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, platform):
+def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM):
     with open(platform, "r") as read: 
         text = read.readlines()
         with open(CODE_ADDR, "r") as read:
