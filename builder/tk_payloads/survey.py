@@ -1,4 +1,3 @@
-from tkinter import *
 root = Tk()
 Label(root, text="Write your name:", font=("", 15)).place(x=15, y=50)
 name = Entry(root, width=50)

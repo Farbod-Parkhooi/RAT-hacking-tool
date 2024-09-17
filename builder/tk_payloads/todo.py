@@ -1,7 +1,4 @@
-import tkinter
 import random
-from tkinter import messagebox
-
 
 def update_tasks():
     clear_listbox()

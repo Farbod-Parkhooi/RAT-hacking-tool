@@ -1,4 +1,3 @@
-from tkinter import *
 import webview
 root = Tk()
 root.geometry("800x450")

@@ -1,5 +1,3 @@
-from tkinter import*
-
 def btnclick(numbers):   #define the button(btn)click function
     global operator
     operator=operator + str(numbers)

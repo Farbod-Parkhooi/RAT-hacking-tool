@@ -2,10 +2,6 @@ import os
 from tkinter.filedialog import askdirectory
 import pygame
 from mutagen.id3 import ID3
-from tkinter import *
-from tkinter import messagebox
-
-
 
 root = Tk()
 root.wm_title("MUSIC PLAYER")
@@ -122,8 +118,8 @@ def directorychooser():
     else:
         listbox.delete(0, END)
         realnames.reverse()
-        for items in realnames:
-            listbox.insert(0, items)
+        for iteRAT in realnames:
+            listbox.insert(0, iteRAT)
         for i in listofsongs:
             count = count + 1
         pygame.mixer.init()

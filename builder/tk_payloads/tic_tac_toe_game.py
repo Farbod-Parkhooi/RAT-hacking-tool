@@ -1,4 +1,3 @@
-from tkinter import *
 from tkinter import ttk
 import tkinter.messagebox
 root=Tk()
