@@ -1,6 +1,8 @@
 # Meta Sploit Telegram (RAT) 
-RAT is a telegram bot for control other PCs.
+
 <img src="Files/first.jpeg" />
+
+RAT is a telegram bot for control other PCs.
 
 # installing
 
