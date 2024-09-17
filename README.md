@@ -90,4 +90,5 @@ It show nothing
 
 # Donate
 
-## <b> For donate us please star this repo :) </b>
+## <b> For donate us please star this repository :) </b>
+ 
