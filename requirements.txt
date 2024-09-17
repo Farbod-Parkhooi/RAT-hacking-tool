@@ -1,7 +1,4 @@
-# you should install Its_Hub Library (https://www.github.com/Unknow-per/Its_Hub-Library)
-wget==3.2
-bs4==0.0.2
-colorama==0.4.6
-pywebview==5.0.5
-mutagen==1.47.0
-PyAutoGUI==0.9.54
+colorama>=0.4.6
+tk>=0.1.0
+bs4>=0.0.2
+pyautogui>=0.9.54
