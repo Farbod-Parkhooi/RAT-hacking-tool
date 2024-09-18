@@ -38,7 +38,7 @@ def make_python(ID, TOKEN, NAME, MAX_LETTER, CODE_ADDR, OFFLINE_CODE_ADDR, PLATF
             # read each line of code
             for line in reader:
                 offline_code += f"    {line}\n"
-        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code).replace("MAX_LETTER", MAX_LETTER)
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code).replace("MAX_LETTER", f"int({MAX_LETTER})")
     # make 'output' directory
     getoutput("mkdir output")
     # make output file with custom name
