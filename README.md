@@ -1,19 +1,19 @@
-# Meta Sploit Telegram (RAT) 
+# RECONNECTED AT TELEGRAM (RAT) 
 
 <img src="Files/first.jpeg" />
 
-RAT is a telegram bot for control other PCs.
+RAT is a telegram bot and application to control other PCs.
 
 # installing
 
 ```
-git clone https://github.com/Farbod-Parkhooi/RAT/
+git clone https://github.com/Farbod-Parkhooi/RAT-hacking-tool.git
 
-cd RAT
+cd RAT-hacking-tool
 
 pip install -r requirements.txt
 
-python setup.py
+python3 setup.py
 ```
 
 # How to use 
@@ -22,7 +22,7 @@ python setup.py
 
 create your bot in Telegram(with @BotFather bot) and save the token
 
-get your Telegram IP with @userinfobot bot and save it 
+get your Telegram IP with @userinfobot bot and save it.
 
 after complete setup.py:
 
