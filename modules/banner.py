@@ -116,8 +116,8 @@ def get_options(): # get all of inputs and make python file
     try: 
         # get inputs
         id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
-        token = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram bot token here: ")).lower()
-        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()      
+        token = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram bot token here: "))
+        name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: "))     
         clear()
         same_banner()
         max_letter = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your max letter value(after that bot send you a link on note. its faster! | just write number without space): "))  
