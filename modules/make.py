@@ -61,8 +61,6 @@ def make_exe(NAME, ICON):
     # start creating the exe file with pyinstaller
     if "not recognized" in getoutput("pyinstaller"): command = f"python -m PyInstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py"
     else: command = f"python -m pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py"
-    print(command)
-    exit()
     out = getoutput(command)
     # print 50%
     printer("50")

