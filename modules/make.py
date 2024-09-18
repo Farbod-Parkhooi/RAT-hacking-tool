@@ -21,23 +21,27 @@ def make_python(ID, TOKEN, NAME, MAX_LETTER, CODE_ADDR, OFFLINE_CODE_ADDR, PLATF
     with open(PLATFORM, "r") as read: 
         text = read.readlines()
         # read online code file 
-        with open(CODE_ADDR, "r") as read:
-            reader = read.readlines()
-            reader = "".join(reader)
-            reader = reader.split("\n")
-            online_code = """"""
-            # read each line of code
-            for line in reader:
-                online_code += f"    {line}\n"
+        try:
+            with open(CODE_ADDR, "r") as read:
+                reader = read.readlines()
+                reader = "".join(reader)
+                reader = reader.split("\n")
+                online_code = """"""
+                # read each line of code
+                for line in reader:
+                    online_code += f"    {line}\n"
+        except FileNotFoundError: print(Fore.RED + f"Couldn't find {CODE_ADDR}")
         # read offline code file
-        with open(OFFLINE_CODE_ADDR, "r") as read:
-            reader = read.readlines()
-            reader = "".join(reader)
-            reader = reader.split("\n")
-            offline_code = """"""
-            # read each line of code
-            for line in reader:
-                offline_code += f"    {line}\n"
+        try:
+            with open(OFFLINE_CODE_ADDR, "r") as read:
+                reader = read.readlines()
+                reader = "".join(reader)
+                reader = reader.split("\n")
+                offline_code = """"""
+                # read each line of code
+                for line in reader:
+                    offline_code += f"    {line}\n"
+        except FileNotFoundError: print(Fore.RED + f"Couldn't find {OFFLINE_CODE_ADDR}")
         text = "".join(text).replace("TELEGRAM_ID", ID).replace("BOT_TOKEN", f'"{TOKEN}"').replace("ONLINE_CODE", online_code).replace("OFFLINE_CODE", offline_code).replace("MAX_LETTER", f"int({MAX_LETTER})")
     # make 'output' directory
     getoutput("mkdir output")
@@ -55,10 +59,11 @@ def make_exe(NAME, ICON):
     # print 15%
     printer("15")
     # start creating the exe file with pyinstaller
-    if "not recognized" in getoutput("pyinstaller"): 
-        out = getoutput(f"python -m PyInstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
-    else:
-        out = getoutput(f"python -m pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py")
+    if "not recognized" in getoutput("pyinstaller"): command = f"python -m PyInstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py"
+    else: command = f"python -m pyinstaller --name {NAME} --onefile -i {ICON} --noconsole --distpath output/exe output/{NAME}.py"
+    print(command)
+    exit()
+    out = getoutput(command)
     # print 50%
     printer("50")
     # make exe output log file in log/ directory

