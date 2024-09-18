@@ -37,7 +37,7 @@ Now you can send /commands to help in your bot page in Telegram.
 
 # Standard TK payloads (17)
 
-find out standard tkinter payloads in <b> builder/tk_payloads </b>
+To read all <b>Standard TK Payloads</b> <a href="https://github.com/Farbod-Parkhooi/RAT-hacking-tool/blob/main/PAYLOADS.md">see this!</a>
 
 # Donate
 
