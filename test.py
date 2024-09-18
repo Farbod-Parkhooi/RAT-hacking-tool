@@ -74,13 +74,6 @@
 # # print("[*] Command successfuly executed")
 
 
-# # from pynput import mouse, keyboard
-
-# # mouse_listener = mouse.Listener(suppress=True)
-# # keyboard_listener = keyboard.Listener(suppress=True)
-# # mouse_listener.start()
-# # keyboard_listener.start()
-
 # # mouse_listener.stop()
 # # keyboard_listener.stop()
 
